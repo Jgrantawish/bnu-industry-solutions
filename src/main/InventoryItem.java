@@ -5,14 +5,16 @@ public class InventoryItem{
     private int sellPrice;
     private int currentStock;
     private int restockThreshold;
+    private Supplier supplier;
 
-    public InventoryItem(String itemName, String description, int purchasePrice, int sellPrice, int stock, int restockThreshold){
+    public InventoryItem(String itemName, String description, int purchasePrice, int sellPrice, int stock, int restockThreshold, Supplier supplier){
         this.name = itemName;
         this.description = description;
         this.purchasePrice = purchasePrice;
         this.sellPrice = sellPrice;
         this.currentStock = stock;
         this.restockThreshold = restockThreshold;
+        this.supplier = supplier;
     }
 
     public String getName(){
