@@ -11,5 +11,9 @@ public class QuantityItem extends Item{
         super(itemToCopy);
         this.quantity = itemToCopy.quantity;
     }
-    
+
+    public int getQuantity(){
+        return this.quantity;
+    }
+
 }
