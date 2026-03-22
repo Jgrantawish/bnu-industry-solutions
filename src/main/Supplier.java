@@ -1,32 +1,10 @@
-public class Supplier{
-    private String name;
-    private String contactName;
-    private String email;
-    private String phoneNumber;
-    private String address;
-    private String postcode; 
+public class Supplier extends Contact{
 
-
-    public Supplier(String supplierName, String contactName, String email, String phone, String address, String postcode){
-        this.name = supplierName;
-        this.contactName = contactName;
-        this.email = email;
-        this.phoneNumber = phone; 
-        this.address = address;
-        this.postcode = postcode; 
-    }
-
-    public void update(){
-        
+    public Supplier(String supplierName, String email, String phone, String address, String postcode){
+        super(supplierName, email, phone, address, postcode);
     }
 
 
-    public void viewOrderHistory(){
-
-    }
-
-
-
-
+    
 }
 
