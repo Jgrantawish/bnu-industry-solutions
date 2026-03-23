@@ -1,9 +1,12 @@
+import java.util.ArrayList;
+
 public abstract class Contact {
     private String name;
     private String email;
     private String phoneNumber;
     private String address;
-    private String postcode; 
+    private String postcode;
+    private ArrayList<Order> orderHistory;
     
 
     public Contact(String name, String email, String phone, String address, String postcode){
@@ -14,15 +17,18 @@ public abstract class Contact {
         this.postcode = postcode; 
     }
 
-    public String getName(){
-        return name;
+    protected void updateOrderHistory(Order order){
+        this.orderHistory.add(order);
+    }
+
+    public String getEmail(){
+        return email;
     }
 
 
     public void update(){
         
     }
-
 
     public void viewOrderHistory(){
 
