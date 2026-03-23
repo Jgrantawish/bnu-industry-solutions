@@ -5,4 +5,8 @@ public class SellItem extends QuantityItem{
         super(quantityItem);
         this.unitSellPrice = unitSellPrice;
     }
+
+    public double getUnitSellPrice(){
+        return this.unitSellPrice;
+    }
 }
