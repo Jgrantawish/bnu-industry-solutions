@@ -1,41 +1,33 @@
 import java.util.ArrayList;
 
-public class ContactManager{
-    private ArrayList<Supplier> suppliers; 
-
+public abstract class ContactManager <T extends Contact>{
+    private ArrayList<T> contacts; 
     
     public ContactManager(){
     }
 
-    public void addSupplier(String supplierName, String email, String phone, String address, String postcode){
-        Supplier supplier = new Supplier(supplierName, email, phone, address, postcode);
-        suppliers.add(supplier);
+    protected void addContact(T contact){
+        this.contacts.add(contact);
     }
 
-    public ArrayList<Supplier> getSuppliers(){
-        return suppliers;
+    public ArrayList<T> getContacts(){
+        return this.contacts;
     }
 
-    public Supplier findSupplierByName(String name){
-        for (Supplier supplier : suppliers){
-            if (supplier.getName().equals(name)){
-                return supplier;
+    public T findContactByEmail(String email){
+        for (T contact : this.contacts){
+            if (contact.getEmail().equals(email)){
+                return contact;
             }
         }
         return null;
     } 
 
-    public void deleteSupplierByName(String name){
-        Supplier supplier = findSupplierByName(name);
-        if (supplier != null){
-            suppliers.remove(supplier);
+    public void deleteContactByEmail(String email){
+        T contact = findContactByEmail(email);
+        if (contact != null){
+            this.contacts.remove(contact);
         }
     }
-
-
-
-
-
-
 
 }
