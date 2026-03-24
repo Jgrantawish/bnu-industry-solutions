@@ -8,6 +8,18 @@ public class Supplier extends Contact{
         super(supplierName, email, phone, address, postcode);
     }
 
+    private String itemsToString(){
+        String itemsString = "";
+        for (int i = 0; i < this.items.size(); i++){
+            Item item = this.items.get(i);
+            itemsString += item.getName();
+            if (i < this.items.size() - 1) {
+                itemsString += ", ";
+            }
+        }
+        return itemsString;
+    }
+
     public void addItem(Item item){
         this.items.add(item);
     }
@@ -15,6 +27,13 @@ public class Supplier extends Contact{
     public void updateSupplierInfo(){
     ///
     }
+
+    public String toString(){
+        String itemsString = itemsToString();
+        return this.getName()+ " -- " + this.getEmail() + " -- " + this.getphoneNumber() + " -- " + this.getAddress() + ", " + this.getPostcode() + " -- Supplier of: " + itemsString;
+    }
+
+
 
 }
 
