@@ -6,7 +6,7 @@ public abstract class Contact {
     private String phoneNumber;
     private String address;
     private String postcode;
-    private ArrayList<Order> orderHistory;
+    private ArrayList<Order> orderHistory = new ArrayList<>();;
     
 
     public Contact(String name, String email, String phone, String address, String postcode){

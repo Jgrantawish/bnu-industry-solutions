@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public abstract class ContactManager <T extends Contact>{
-    private ArrayList<T> contacts; 
+    private ArrayList<T> contacts = new ArrayList<>();; 
     
     public ContactManager(){
     }
