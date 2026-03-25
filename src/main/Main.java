@@ -138,7 +138,7 @@ public class Main {
             //
             break;
         }
-        getSupplierManagementMenuOption(scanner);
+        handleSupplierManagementMenuOption(scanner);
     }
 
     private static void displayAllSuppliers(){
