@@ -55,7 +55,7 @@ public class Main {
     private static void createDummySuppliers(){
         WHMS.supplierManager.addSupplier("SuperBricksRUs", "sales@superbricks.com", null, null, "OX4 3TZ");
         WHMS.supplierManager.addSupplier("Tom Drew", "tom@gmail.com", null, null, null);
-        WHMS.supplierManager.addSupplier("SuperBricksRUs", null, null, null, null);
+        WHMS.supplierManager.addSupplier("SuperBricksRUs", "super@bricks.ru", null, null, null);
         WHMS.supplierManager.addSupplier("Screw4You", "bob@screws4you.co.uk", null, null, null);
     }
 
@@ -129,7 +129,7 @@ public class Main {
                 addNewSupplier(scanner);
             break;
             case 3:
-            //
+                deleteSupplier(scanner);
             break;
             case 4:
             //
@@ -165,6 +165,18 @@ public class Main {
         } 
         catch (Exception e){
             System.out.println("Uh Oh! Something went wrong. We could not add your new Supplier to the system.");
+        }
+    }
+
+    private static void deleteSupplier(Scanner scanner){
+        System.out.println("\n----- Delete Supplier -----");
+        String email = getEmailInput(scanner, "Please enter the email address of the Supplier that you want to delete.");
+        try {
+            WHMS.supplierManager.deleteContactByEmail(email);
+            System.out.println("The Supplier was successfully deleted!");
+        } 
+        catch (Exception e){
+            System.out.println(e + "Uh Oh! We were unable to delete a Supplier with that email address from the system.");
         }
     }
 
