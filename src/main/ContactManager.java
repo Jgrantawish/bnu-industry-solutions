@@ -23,11 +23,8 @@ public class ContactManager <T extends Contact>{
         return null;
     } 
 
-    public void deleteContactByEmail(String email){
-        T contact = findContactByEmail(email);
-        if (contact != null){
-            this.contacts.remove(contact);
-        }
+    public void deleteContact(T contact){
+        this.contacts.remove(contact);
     }
 
 }

@@ -70,6 +70,16 @@ public class Main {
         return input;
     }
 
+     private static Supplier getExistingSupplierByEmail(Scanner scanner, String prompt){
+        String input = getEmailInput(scanner, prompt);
+        while (WHMS.supplierManager.findContactByEmail(input) == null) {
+            System.out.println("Uh Oh! There is no Supplier with this email address. ");
+            input = getEmailInput(scanner, prompt);
+        }
+        return WHMS.supplierManager.findContactByEmail(input);
+    }
+    
+
     private static int getNumberOption(Scanner scanner, int maxMenuLength, String menuText){
         int option = 0;
         while (option < 1 || option > maxMenuLength){
@@ -177,9 +187,9 @@ public class Main {
 
     private static void deleteSupplier(Scanner scanner){
         System.out.println("\n----- Delete Supplier -----");
-        String email = getEmailInput(scanner, "Please enter the email address of the Supplier that you want to delete.");
+        Supplier supplier = getExistingSupplierByEmail(scanner, "Please enter the email address of the Supplier that you want to delete.");
         try {
-            WHMS.supplierManager.deleteContactByEmail(email);
+            WHMS.supplierManager.deleteContact(supplier);
             System.out.println("The Supplier was successfully deleted!");
         } 
         catch (Exception e){
