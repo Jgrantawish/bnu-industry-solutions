@@ -23,7 +23,7 @@ public abstract class Contact {
         return this.email;
     }
 
-    public String getphoneNumber(){
+    public String getPhoneNumber(){
         return this.phoneNumber;
     }
 
@@ -35,7 +35,26 @@ public abstract class Contact {
         return this.postcode;
     }
 
-    public void update(){
-        
+    public void setName(String newName){
+        this.name = newName;
     }
+
+    public void setEmail(String newEmail){
+        this.email = newEmail;
+    }
+
+    public void setPhoneNumber(String newPhone){
+        this.phoneNumber = newPhone;
+    }
+
+    public void setAddress(String address){
+        this.address = address;
+    }
+
+    public void setPostcode(String postcode){
+        this.postcode = postcode;
+    }
+
+    
+
 }
