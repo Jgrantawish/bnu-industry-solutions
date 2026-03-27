@@ -61,6 +61,15 @@ public class Main {
         return input;
     }
 
+    private static String getNewSupplierEmailInput(Scanner scanner, String prompt){
+        String input = getEmailInput(scanner, prompt);
+        while (WHMS.supplierManager.findContactByEmail(input) != null) {
+            System.out.println("Uh Oh! This email address is already in use. ");
+            input = getEmailInput(scanner, prompt);
+        }
+        return input;
+    }
+
     private static int getNumberOption(Scanner scanner, int maxMenuLength, String menuText){
         int option = 0;
         while (option < 1 || option > maxMenuLength){
@@ -152,7 +161,7 @@ public class Main {
     private static void addNewSupplier(Scanner scanner){
         System.out.println("\n----- Add New Supplier -----");
         String name = getStringInput(scanner, "Please enter the Supplier's name.");
-        String email = getEmailInput(scanner, "Please enter the Supplier's email address.");
+        String email = getNewSupplierEmailInput(scanner, "Please enter the Supplier's email address.");
         String phone = getPhoneNumberInput(scanner, "Please enter the Supplier's phone number.");
         String address = getStringInput(scanner, "Please enter the Supplier's address.");
         String postcode = getStringInput(scanner, "Please enter the Supplier's postcode.");
