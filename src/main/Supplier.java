@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Supplier extends Contact{
+    private ArrayList<SupplierOrder> orderHistory = new ArrayList<>();;
     private ArrayList<Item> items = new ArrayList<>();
     
 
@@ -26,6 +27,15 @@ public class Supplier extends Contact{
 
     public void updateSupplierInfo(){
     ///
+    }
+
+    public void updateOrderHistory(SupplierOrder order){
+        this.orderHistory.add(order);
+    }
+
+    public ArrayList<SupplierOrder> getOrderHistory(){
+        return this.orderHistory;
+
     }
 
     public String toString(){

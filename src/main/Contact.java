@@ -5,9 +5,7 @@ public abstract class Contact {
     private String email;
     private String phoneNumber;
     private String address;
-    private String postcode;
-    private ArrayList<Order> orderHistory = new ArrayList<>();;
-    
+    private String postcode;    
 
     public Contact(String name, String email, String phone, String address, String postcode){
         this.name = name;
@@ -15,10 +13,6 @@ public abstract class Contact {
         this.phoneNumber = phone; 
         this.address = address;
         this.postcode = postcode; 
-    }
-
-    protected void updateOrderHistory(Order order){
-        this.orderHistory.add(order);
     }
 
     public String getName(){
@@ -43,12 +37,5 @@ public abstract class Contact {
 
     public void update(){
         
-    }
-
-    public void viewOrderHistory(){
-        for (Order order : orderHistory) {
-
-        }
-
     }
 }
