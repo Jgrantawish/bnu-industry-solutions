@@ -25,10 +25,10 @@ public class Main {
     }
 
     private static void createDummySuppliers(){
-        WHMS.supplierManager.addSupplier("SuperBricksRUs", "sales@superbricks.com", null, null, "OX4 3TZ");
-        WHMS.supplierManager.addSupplier("Tom Drew", "tom@gmail.com", null, null, null);
-        WHMS.supplierManager.addSupplier("SuperBricksRUs", "super@bricks.ru", null, null, null);
-        WHMS.supplierManager.addSupplier("Screw4You", "bob@screws4you.co.uk", null, null, null);
+        WHMS.supplierManager.addContact(new Supplier("SuperBricksRUs", "sales@superbricks.com", null, null, "OX4 3TZ"));
+        WHMS.supplierManager.addContact(new Supplier("Tom Drew", "tom@gmail.com", null, null, null));
+        WHMS.supplierManager.addContact(new Supplier("SuperBricksRUs", "super@bricks.ru", null, null, null));
+        WHMS.supplierManager.addContact(new Supplier("Screw4You", "bob@screws4you.co.uk", null, null, null));
     }
 
     private static void createDummyPurchaseOrders(){
@@ -92,16 +92,17 @@ public class Main {
                             handleSupplierManagementMenu(scanner);
                         break;
                         case 2:
-                        //InventoryManagement(scanner);
+                        //handleCustomerManagementMenu(scanner);
                         break;
                         case 3:
-                        //
+                        //handleInventoryManagementMenu(scanner);
                         break;
                         case 4:
-                        //
+                        //handleOrderManagementMenu(scanner);
+                        // place co, po,  
                         break;
                         case 5:
-                        //
+                        //handleFinanceManagementMenu(scanner);
                         break;
                         case 6:
                         // Exits the program
@@ -157,7 +158,7 @@ public class Main {
         String postcode = getStringInput(scanner, "Please enter the Supplier's postcode.");
 
         try {
-            WHMS.supplierManager.addSupplier(name, email, phone, address, postcode);
+            WHMS.supplierManager.addContact(new Supplier(name, email, phone, address, postcode));
             System.out.println("Your new Supplier " + name + " has been successfully added!");
         } 
         catch (Exception e){

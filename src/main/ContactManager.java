@@ -1,12 +1,12 @@
 import java.util.ArrayList;
 
-public abstract class ContactManager <T extends Contact>{
+public class ContactManager <T extends Contact>{
     private ArrayList<T> contacts = new ArrayList<>();; 
     
     public ContactManager(){
     }
 
-    protected void addContact(T contact){
+    public void addContact(T contact){
         this.contacts.add(contact);
     }
 
