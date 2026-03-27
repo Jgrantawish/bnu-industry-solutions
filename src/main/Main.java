@@ -9,9 +9,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        //Program is running
-        boolean running = true;
-
         // Adds some default suppliers at the start of the program
         createDummySuppliers();
 
@@ -21,35 +18,10 @@ public class Main {
         // Open the scanner for user input 
         Scanner scanner = new Scanner(System.in);
         
-        while(running){
-            // Get the selected main menu option and call the corresponding function for that number
-            switch (getMainMenuOption(scanner)){
-                        case 1:
-                        handleSupplierManagementMenuOption(scanner);
-                        break;
-                        case 2:
-                        //InventoryManagement(scanner);
-                        break;
-                        case 3:
-                        //
-                        break;
-                        case 4:
-                        //
-                        break;
-                        case 5:
-                        //
-                        break;
-                        case 6:
-                        // Exits the program
-                        System.out.println("Goodbye!");
-                        running = false;
-                        break;
-            };
-        }
+        handleMainMenu(scanner);
 
         // Close out the scanner 
         scanner.close();
-
     }
 
     private static void createDummySuppliers(){
@@ -114,13 +86,38 @@ public class Main {
         return getNumberOption(scanner, 6, menuText);
     }
 
+    private static void handleMainMenu(Scanner scanner){
+        switch (getMainMenuOption(scanner)){
+                        case 1:
+                            handleSupplierManagementMenu(scanner);
+                        break;
+                        case 2:
+                        //InventoryManagement(scanner);
+                        break;
+                        case 3:
+                        //
+                        break;
+                        case 4:
+                        //
+                        break;
+                        case 5:
+                        //
+                        break;
+                        case 6:
+                        // Exits the program
+                        System.out.println("Goodbye!");
+                        System.exit(0);
+                        break;
+            };
+    }
+
     private static int getSupplierManagementMenuOption(Scanner scanner){
         String menuText= "Please select the corresponding number (1-5) from the menu below:\n 1. View All Suppliers\n 2. Add New Supplier\n 3. Delete Supplier \n 4. Update Supplier Details \n 5. Back to Main Menu";
         System.out.println("\n----- Supplier Management ----- \n\nWhat would you like to do?\n" + menuText);
         return getNumberOption(scanner, 5, menuText);
     }
 
-    private static void handleSupplierManagementMenuOption(Scanner scanner){
+    private static void handleSupplierManagementMenu(Scanner scanner){
         switch (getSupplierManagementMenuOption(scanner)){
             case 1:
                 displayAllSuppliers();
@@ -135,10 +132,10 @@ public class Main {
             //
             break;
             case 5:
-            //
+                handleMainMenu(scanner);
             break;
         }
-        handleSupplierManagementMenuOption(scanner);
+        handleSupplierManagementMenu(scanner);
     }
 
     private static void displayAllSuppliers(){
