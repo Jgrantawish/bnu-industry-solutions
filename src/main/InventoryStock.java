@@ -1,5 +1,6 @@
 public class InventoryStock {
     private String name;
+    private String description;
     private Supplier supplier;
     private double avgPurchasePrice;
     private double currentSellPrice;
@@ -9,6 +10,7 @@ public class InventoryStock {
 
     public InventoryStock(QuantityItem quantityItem, double priceMarkUpFactor, int lowStockThreshold){
         this.name = quantityItem.getName();
+        this.description = quantityItem.getDescription();
         this.supplier = quantityItem.getSupplier();
         this.stockLevel = 0;
         this.markUpFactor = priceMarkUpFactor;
@@ -28,24 +30,38 @@ public class InventoryStock {
 
     }
 
-    private boolean isLow(){
+    public boolean isLow(){
         return (this.stockLevel > 0 && this.stockLevel <= this.lowStockThreshold);
     }
 
-    private boolean isOut(){
+    public boolean isOut(){
         return (this.stockLevel == 0);
     }
-
+    
     public void addStock(QuantityItem quantityItem){
+        this.calculateAvgPurchasePrice(quantityItem);
+        this.calculateCurrentSellPrice();
         this.stockLevel =+ quantityItem.getQuantity();
     }
 
-    public void removeStock(QuantityItem quantityItem){
+    public void reduceStock(QuantityItem quantityItem){
         this.stockLevel =- quantityItem.getQuantity();
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public int getCurrentStockLevel(){
+        return this.stockLevel;
     }
 
     public double getCurrentSellPrice(){
         return this.currentSellPrice;
+    }
+
+    public String toString(){
+        return this.name + " -- " + this.description + " -- Current Stock Level: " + this.stockLevel + " -- Average Purchase Price: " + this.avgPurchasePrice + " -- Current Sell Price:  " + this.currentSellPrice + " -- Supplied by: " + this.supplier;
     }
 
     

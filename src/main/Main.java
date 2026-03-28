@@ -361,4 +361,55 @@ public class Main {
 
     }
 
+
+    private static int getInventoryManagementMenuOption(Scanner scanner){
+        String menuText= "Please select the corresponding number (1-4) from the menu below:\n 1. View All Items In Stock \n 2. View All Items Low In Stock\n 3. View All Items Out Of Stock \n 4. Back to Main Menu";
+        System.out.println("\n----- Order Management ----- \n\nWhat would you like to do?\n" + menuText);
+        return getNumberOption(scanner, 4, menuText);
+    }
+
+    private static void handleInventoryManagementMenu(Scanner scanner){
+        switch (getInventoryManagementMenuOption(scanner)){
+            case 1:
+                displayItemsInStock();
+            break;
+            case 2:
+                displayItemsLowInStock();
+            break;
+            case 3:
+                displayItemsOutOfStock();
+            break;
+            case 4:
+                handleMainMenu(scanner);
+            break;
+        }
+        handleInventoryManagementMenu(scanner);
+    }
+
+    private static void displayInventoryItemsList(ArrayList<InventoryStock> items){
+        int index = 0;
+        for (InventoryStock item : items){
+            index++;
+            System.out.println(index + ". " + item.toString());
+        }
+    }
+
+    private static void displayItemsInStock(){
+        System.out.println("\n----- Items In Stock -----");
+        ArrayList<InventoryStock> items = WHMS.inventoryManager.getAllItemInStock();
+        displayInventoryItemsList(items);
+    }
+
+    private static void displayItemsLowInStock(){
+        System.out.println("\n----- Items Low In Stock -----");
+        ArrayList<InventoryStock> items = WHMS.inventoryManager.getItemsLowInStock();
+        displayInventoryItemsList(items);
+    }
+
+    private static void displayItemsOutOfStock(){
+        System.out.println("\n----- Items Out Of Stock -----");
+        ArrayList<InventoryStock> items = WHMS.inventoryManager.getItemsOutOfStock();
+        displayInventoryItemsList(items);
+    }
+
 }
