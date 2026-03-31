@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.time.LocalDate;
 
-public class Order {
+public abstract class Order {
     private static int count = 0;
     private int orderId; 
     private LocalDate date;
@@ -13,8 +13,20 @@ public class Order {
 
     }
 
-    public void markAsDelivered(){
-
+    public int getOrderId(){
+        return this.orderId;
     }
-    
+
+    public LocalDate getDate(){
+        return this.date;
+    }
+
+    public Status getStatus(){
+        return this.status;
+    }
+
+    public void markAsDelivered(){
+        this.status = Status.DELIVERED; 
+    }
+
 }
