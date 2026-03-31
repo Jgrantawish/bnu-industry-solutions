@@ -66,23 +66,60 @@ public class Main {
         return input;
     }
 
-    private static double getPriceInput(Scanner scanner, String prompt){
+    private static double getDoubleInput(Scanner scanner, String prompt, String doubleType){
         System.out.println(prompt);
         double input = -1;
         while (input < 0) {
             if (scanner.hasNextDouble()) {
                 input = scanner.nextDouble();
                 if (input < 0) {
-                    System.out.println("Uh Oh! You entered a negative price. " + prompt);
+                    System.out.println("Uh Oh! You entered a negative " + doubleType + ". " + prompt);
                 }
             } else {
-                System.out.println("Uh Oh! You did not enter a valid price. " + prompt);
+                System.out.println("Uh Oh! You did not enter a valid " + doubleType + ". " + prompt);
             }
         // Call nextLine to clear the newLine character in the scanner 
         scanner.nextLine();
         }
         return input;
     }
+
+    private static int getIntInput(Scanner scanner, String prompt){
+        int input = 0;
+        while (input < 0){
+            if (scanner.hasNextInt()) {
+                input = scanner.nextInt();
+                if (input < 1) {
+                    System.out.println("Uh Oh! You did not enter a positive number. " + prompt);
+                }
+            } 
+            else {
+                System.out.println("Uh Oh! You did not enter a valid number. " + prompt);
+            }
+    
+            // Call nextLine to clear the newLine character in the scanner 
+            scanner.nextLine();
+        }
+        return input;
+
+    }
+
+    private static boolean getYesNoInput(Scanner scanner, String prompt){
+        System.out.println(prompt);
+        String input = scanner.nextLine(); 
+        while (true){
+            if (input.equalsIgnoreCase("yes")) {
+                return true;
+            }
+            else if (input.equalsIgnoreCase("no")) {
+                return false;
+            } else {
+                System.out.println("Please enter yes or no. " + prompt);
+                input = scanner.nextLine(); 
+            }
+        }
+    }
+
 
     private static String getNewSupplierEmailInput(Scanner scanner, String prompt){
         String input = getEmailInput(scanner, prompt);
@@ -114,7 +151,7 @@ public class Main {
     private static Item findItemfromSupplier(Scanner scanner, String prompt, Supplier supplier){
         String input = getStringInput(scanner, prompt);
         while (supplier.findItemByName(input) == null) {
-            System.out.println("Uh Oh! There is no Item with this name address. ");
+            System.out.println("Uh Oh! There is no Item with this name. ");
             input = getStringInput(scanner, prompt);
         }
         return supplier.findItemByName(input); 
@@ -234,7 +271,7 @@ public class Main {
             System.out.println("The Supplier was successfully deleted!");
         } 
         catch (Exception e){
-            System.out.println(e + "Uh Oh! We were unable to delete a Supplier with that email address from the system.");
+            System.out.println("Uh Oh! We were unable to delete a Supplier with that email address from the system.");
         }
     }
 
@@ -281,14 +318,14 @@ public class Main {
         System.out.println("\n----- Add Item Supplied By " + supplier.getName() + " -----\n");
         String itemName = getNewItemNameInput(scanner, "Please enter the name of the new item supplied by" + supplier.getName() + ".");
         String description = getStringInput(scanner, "Please enter a description for this new item.");
-        double price = getPriceInput(scanner, "Please enter the unit price for this item.");
+        double price = getDoubleInput(scanner, "Please enter the unit price for this item.", "price");
         try {
-           Item newItem = new Item(itemName, description, price, supplier);
-           supplier.addItem(newItem);
+            Item newItem = new Item(itemName, description, price, supplier);
+            supplier.addItem(newItem);
             System.out.println("The Supplier " + supplier.getName() + " is now a supplier of " + itemName + " items!");
         }
         catch (Exception e){
-            System.out.println(e + "Uh Oh! We were unable to make this Supplier a supplier of the new item.");
+            System.out.println("Uh Oh! We were unable to make this Supplier a supplier of the new item.");
         }
 
     }
@@ -301,7 +338,7 @@ public class Main {
             System.out.println("The Supplier item successfully removed!");
         } 
         catch (Exception e){
-            System.out.println(e + "Uh Oh! We were unable to remove the Supplier item.");
+            System.out.println("Uh Oh! We were unable to remove the Supplier item.");
         }
 
     }
@@ -315,7 +352,7 @@ public class Main {
             System.out.println("The Supplier's name was successfully updated from " + oldName + " to " + newName + "!");
         } 
         catch (Exception e){
-            System.out.println(e + "Uh Oh! We were unable to update this Supplier's name.");
+            System.out.println("Uh Oh! We were unable to update this Supplier's name.");
         }
     }
 
@@ -328,7 +365,7 @@ public class Main {
             System.out.println("The Supplier's email address was successfully updated from " + oldEmail + " to " + newEmail + "!");
         } 
         catch (Exception e){
-            System.out.println(e + "Uh Oh! We were unable to update this Supplier's email.");
+            System.out.println("Uh Oh! We were unable to update this Supplier's email.");
         }
     }
 
@@ -341,7 +378,7 @@ public class Main {
             System.out.println("The Supplier's phone number was successfully updated from " + oldPhone + " to " + newPhone + "!");
         } 
         catch (Exception e){
-            System.out.println(e + "Uh Oh! We were unable to update this Supplier's phone number.");
+            System.out.println("Uh Oh! We were unable to update this Supplier's phone number.");
         }
 
     }
@@ -356,16 +393,16 @@ public class Main {
             System.out.println("The Supplier's address was successfully updated to" + address + ", " + postcode + "!");
         } 
         catch (Exception e){
-            System.out.println(e + "Uh Oh! We were unable to update this Supplier's address.");
+            System.out.println("Uh Oh! We were unable to update this Supplier's address.");
         }
 
     }
 
 
     private static int getInventoryManagementMenuOption(Scanner scanner){
-        String menuText= "Please select the corresponding number (1-4) from the menu below:\n 1. View All Items In Stock \n 2. View All Items Low In Stock\n 3. View All Items Out Of Stock \n 4. Back to Main Menu";
+        String menuText= "Please select the corresponding number (1-6) from the menu below:\n 1. View All Items In Stock \n 2. View All Items Low In Stock\n 3. View All Items Out Of Stock\n 4. Change An Item's 'Low In Stock' Threshold\n 5. Change An Item's Price Markup Multiplier\n 6. Back to Main Menu";
         System.out.println("\n----- Order Management ----- \n\nWhat would you like to do?\n" + menuText);
-        return getNumberOption(scanner, 4, menuText);
+        return getNumberOption(scanner, 6, menuText);
     }
 
     private static void handleInventoryManagementMenu(Scanner scanner){
@@ -380,6 +417,12 @@ public class Main {
                 displayItemsOutOfStock();
             break;
             case 4:
+                editItemLowInStockThreshold(scanner);
+            break;
+            case 5:
+                editItemMarkUpMultiplier(scanner);
+            break;
+            case 6:
                 handleMainMenu(scanner);
             break;
         }
@@ -395,21 +438,48 @@ public class Main {
     }
 
     private static void displayItemsInStock(){
-        System.out.println("\n----- Items In Stock -----");
+        System.out.println("\n----- Items In Stock -----\n");
         ArrayList<InventoryStock> items = WHMS.inventoryManager.getAllItemInStock();
         displayInventoryItemsList(items);
     }
 
     private static void displayItemsLowInStock(){
-        System.out.println("\n----- Items Low In Stock -----");
+        System.out.println("\n----- Items Low In Stock -----\n");
         ArrayList<InventoryStock> items = WHMS.inventoryManager.getItemsLowInStock();
         displayInventoryItemsList(items);
     }
 
     private static void displayItemsOutOfStock(){
-        System.out.println("\n----- Items Out Of Stock -----");
+        System.out.println("\n----- Items Out Of Stock -----\n");
         ArrayList<InventoryStock> items = WHMS.inventoryManager.getItemsOutOfStock();
         displayInventoryItemsList(items);
+    }
+
+    private static void editItemLowInStockThreshold(Scanner scanner){
+        System.out.println("\n----- Change Low In Stock Threshold -----\n");
+        InventoryStock stockItem = findInventoryStockItem(scanner,"Please enter the name of item that you want to change the 'Low In Stock' threshold of.");
+        int threshold = getIntInput(scanner, "Please enter the new number for the 'Low In Stock' threshold.");
+        try {
+            stockItem.setLowInStockThreshold(threshold);
+            System.out.println("The 'Low In Stock' threshold has been successfully changed to " + threshold + " or less items left!");
+        } 
+        catch (Exception e){
+            System.out.println("Uh Oh! We were unable to change the 'Low In Stock' threshold. It is still set to " + stockItem.getLowStockThreshold() + " or less items.");
+        }
+    }
+
+    private static void editItemMarkUpMultiplier(Scanner scanner){
+        System.out.println("\n----- Change Mark Up Multiplier -----\n");
+        InventoryStock stockItem = findInventoryStockItem(scanner,"Please enter the name of item that you want to change the mark-up multiplier of.");
+        double multiplier = getDoubleInput(scanner, "Please enter the new mark-up multiplier that will be used to calculate this item's re-sale price.", "mark-up multiplier");
+        try {
+            stockItem.setMarkUpMultiplier(multiplier);
+            System.out.println("The mark-up multiplier has been successfully changed to " + multiplier + "x the average purchase price of this item!");
+        } 
+        catch (Exception e){
+            System.out.println("Uh Oh! We were unable to change the mark up multiplier for this item. It is still set to " + stockItem.getMarkUpMultiplier() + "x the average purchase price.");
+        }
+        
     }
 
 }

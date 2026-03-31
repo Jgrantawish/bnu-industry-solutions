@@ -4,17 +4,17 @@ public class InventoryStock {
     private Supplier supplier;
     private double avgPurchasePrice;
     private double currentSellPrice;
-    private double markUpFactor;
+    private double markUpMultiplier;
     private int stockLevel;
     private int lowStockThreshold;
 
-    public InventoryStock(QuantityItem quantityItem, double priceMarkUpFactor, int lowStockThreshold){
+    public InventoryStock(QuantityItem quantityItem){
         this.name = quantityItem.getName();
         this.description = quantityItem.getDescription();
         this.supplier = quantityItem.getSupplier();
         this.stockLevel = 0;
-        this.markUpFactor = priceMarkUpFactor;
-        this.lowStockThreshold = lowStockThreshold;
+        this.markUpMultiplier = 1.5;
+        this.lowStockThreshold = 5;
         this.calculateAvgPurchasePrice(quantityItem);
         this.calculateCurrentSellPrice();
     }
@@ -26,7 +26,7 @@ public class InventoryStock {
     }
 
      private void calculateCurrentSellPrice(){
-        this.currentSellPrice = this.markUpFactor * this.avgPurchasePrice;
+        this.currentSellPrice = this.markUpMultiplier * this.avgPurchasePrice;
 
     }
 
@@ -36,6 +36,10 @@ public class InventoryStock {
 
     public boolean isOut(){
         return (this.stockLevel == 0);
+    }
+
+    public boolean checkEnoughInStock(int quantity){
+        return (this.stockLevel >= quantity);
     }
     
     public void addStock(QuantityItem quantityItem){
@@ -58,6 +62,23 @@ public class InventoryStock {
 
     public double getCurrentSellPrice(){
         return this.currentSellPrice;
+    }
+
+    public int getLowStockThreshold(){
+        return this.lowStockThreshold;
+    }
+
+    public double getMarkUpMultiplier(){
+        return this.markUpMultiplier;
+    }
+
+    public void setLowInStockThreshold(int newThreshold){
+        this.lowStockThreshold = newThreshold;
+    }
+
+
+    public void setMarkUpMultiplier(double newMultiplier){
+        this.markUpMultiplier = newMultiplier;
     }
 
     public String toString(){

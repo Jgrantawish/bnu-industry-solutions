@@ -21,12 +21,25 @@ public class Supplier extends Contact{
         return itemsString;
     }
 
+    public Item findItemByName(String itemName){
+        for (Item item: this.items){
+            if (item.getName().equals(itemName)){
+                return item;
+            }
+        }
+        return null;
+    } 
+
     public void addItem(Item item){
         this.items.add(item);
     }
 
-    public void updateSupplierInfo(){
-    ///
+    public ArrayList<Item> getSupplierItems(){
+        return this.items;
+    }
+
+    public void deleteItem(Item item){
+        this.items.remove(item);
     }
 
     public void updateOrderHistory(SupplierOrder order){
@@ -39,8 +52,8 @@ public class Supplier extends Contact{
     }
 
     public String toString(){
-        String itemsString = itemsToString();
-        return this.getName()+ " -- " + this.getEmail() + " -- " + this.getphoneNumber() + " -- " + this.getAddress() + ", " + this.getPostcode() + " -- Supplier of: " + itemsString;
+        String itemsString = this.itemsToString();
+        return this.getName()+ " -- " + this.getEmail() + " -- " + this.getPhoneNumber() + " -- " + this.getAddress() + ", " + this.getPostcode() + " -- Supplier of: " + itemsString;
     }
 
 
