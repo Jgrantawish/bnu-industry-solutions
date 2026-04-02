@@ -10,6 +10,23 @@ public class CustomerOrder extends Order {
         this.basket = basketItems;
     }
 
+    private String orderItemsToString(){
+        String orderItemsString = "";
+        for (int i = 0; i < this.basket.size(); i++){
+            SellItem item = this.basket.get(i);
+            orderItemsString += + item.getQuantity() + " x " + item.getName() + " @ £" + item.getUnitSellPrice() + " each";
+            if (i < this.basket.size() - 1) {
+                orderItemsString += ", ";
+            }
+        }
+        return orderItemsString;
+    }
+
+
+
+    public String toString(){
+        String orderSummaryString = this.orderItemsToString();
+        return "Order ID: " + this.getOrderId() + " -- Ordered by " + this.customer.getName() + " on " + this.getDate() + " -- Summary: " + orderSummaryString + " -- Status: " + this.getStatus();
     }
     
 }
