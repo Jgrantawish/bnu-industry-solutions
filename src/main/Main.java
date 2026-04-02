@@ -150,6 +150,24 @@ public class Main {
         return WHMS.supplierManager.findContactByEmail(input);
     }
 
+    private static String getNewCustomerEmailInput(Scanner scanner, String prompt){
+        String input = getEmailInput(scanner, prompt);
+        while (WHMS.customerManager.findContactByEmail(input) != null) {
+            System.out.println("Uh Oh! This email address is already in use. ");
+            input = getEmailInput(scanner, prompt);
+        }
+        return input;
+    }
+
+     private static Customer getExistingCustomerByEmail(Scanner scanner, String prompt){
+        String input = getEmailInput(scanner, prompt);
+        while (WHMS.customerManager.findContactByEmail(input) == null) {
+            System.out.println("Uh Oh! There is no Customer with this email address. ");
+            input = getEmailInput(scanner, prompt);
+        }
+        return WHMS.customerManager.findContactByEmail(input);
+    }
+
     private static String getNewItemNameInput(Scanner scanner, String prompt){
         String input = getStringInput(scanner, prompt);
         while (WHMS.findSupplierItemByName(input) != null) {
@@ -227,7 +245,7 @@ public class Main {
                             handleSupplierManagementMenu(scanner);
                         break;
                         case 2:
-                            //handleCustomerManagementMenu(scanner);
+                            handleCustomerManagementMenu(scanner);
                         break;
                         case 3:
                             handleInventoryManagementMenu(scanner);
@@ -435,6 +453,160 @@ public class Main {
 
     }
 
+ private static int getCustomerManagementMenuOption(Scanner scanner){
+        String menuText= "Please select the corresponding number (1-5) from the menu below:\n 1. View All Customers\n 2. Add New Customer\n 3. Delete Customer \n 4. Update Customer Details \n 5. Back to Main Menu";
+        System.out.println("\n----- Supplier Management ----- \n\nWhat would you like to do?\n" + menuText);
+        return getNumberOption(scanner, 5, menuText);
+    }
+
+    private static void handleCustomerManagementMenu(Scanner scanner){
+        switch (getCustomerManagementMenuOption(scanner)){
+            case 1:
+                displayAllCustomers();
+            break;
+            case 2:
+                addNewCustomer(scanner);
+            break;
+            case 3:
+                deleteCustomer(scanner);
+            break;
+            case 4:
+                updateCustomerDetails(scanner);
+            break;
+            case 5:
+                handleMainMenu(scanner);
+            break;
+        }
+        handleSupplierManagementMenu(scanner);
+    }
+
+    private static void displayAllCustomers(){
+        System.out.println("\n----- All Customers -----");
+        ArrayList<Customer> customers = WHMS.customerManager.getContacts();
+        int index = 0;
+        for (Customer customer : customers){
+            index++;
+            System.out.println(index + ". " + customer.toString());
+        }
+    }
+
+    private static void addNewCustomer(Scanner scanner){
+        System.out.println("\n----- Add New Customer -----");
+        String name = getStringInput(scanner, "Please enter the Customer's name.");
+        String email = getNewCustomerEmailInput(scanner, "Please enter the Customer's email address.");
+        String phone = getPhoneNumberInput(scanner, "Please enter the Customer's phone number.");
+        String address = getStringInput(scanner, "Please enter the Customer's address.");
+        String postcode = getStringInput(scanner, "Please enter the Customer's postcode.");
+
+        try {
+            WHMS.customerManager.addContact(new Customer(name, email, phone, address, postcode));
+            System.out.println("Your new Customer " + name + " has been successfully added!");
+        } 
+        catch (Exception e){
+            System.out.println("Uh Oh! Something went wrong. We could not add your new Customer to the system.");
+        }
+    }
+
+    private static void deleteCustomer(Scanner scanner){
+        System.out.println("\n----- Delete Customer -----");
+        Customer customer = getExistingCustomerByEmail(scanner, "Please enter the email address of the Customer that you want to delete.");
+        try {
+            WHMS.customerManager.deleteContact(customer);
+            System.out.println("The Customer was successfully deleted!");
+        } 
+        catch (Exception e){
+            System.out.println("Uh Oh! We were unable to delete a Customer with that email address from the system.");
+        }
+    }
+
+    private static void updateCustomerDetails(Scanner scanner){
+        Customer customer = getExistingCustomerByEmail(scanner, "Please enter the email address of the Customer who's details you want to update.");
+        handleUpdateCustomerDetailsMenu(scanner, customer);
+
+    }
+
+    private static int getUpdateCustomerDetailsMenuOption(Scanner scanner, Customer customer){
+        String menuText= "Please select the corresponding number (1-5) from the menu below:\n 1. Update Customer Name \n 2. Update Customer Email \n 3. Update Customer Phone Number \n 4. Update Customer Address  \n 5. Back to Supplier Management";
+        System.out.println("\n----- " + customer.getName() + " Supplier Details ----- \n\nWhat would you like to do?\n" + menuText);
+        return getNumberOption(scanner, 5, menuText);
+    }
+
+    private static void handleUpdateCustomerDetailsMenu(Scanner scanner, Customer customer){
+        switch (getUpdateCustomerDetailsMenuOption(scanner, customer)){
+            case 1:
+                updateCustomerName(scanner, customer);
+            break;
+            case 2:
+                updateCustomerEmail(scanner, customer);
+            break;
+            case 3:
+                updateCustomerPhoneNumber(scanner, customer);
+            break;
+            case 4:
+                updateCustomerAddress(scanner, customer);
+            break;
+            case 5:
+                handleCustomerManagementMenu(scanner);
+            break;
+        }
+        handleUpdateCustomerDetailsMenu(scanner, customer);
+    }
+
+
+    private static void updateCustomerName(Scanner scanner, Customer customer){
+        System.out.println("\n----- Update " + customer.getName() + "'s Name -----\n");
+        String oldName = customer.getName();
+        String newName = getStringInput(scanner, "Please enter the new name for this Customer.");
+        try {
+            customer.setName(newName);
+            System.out.println("The Customer's name was successfully updated from " + oldName + " to " + newName + "!");
+        } 
+        catch (Exception e){
+            System.out.println("Uh Oh! We were unable to update this Customer's name.");
+        }
+    }
+
+    private static void updateCustomerEmail(Scanner scanner,  Customer customer){
+        System.out.println("\n----- Update " + customer.getName() + "'s Email -----\n");
+        String oldEmail = customer.getEmail();
+        String newEmail = getNewCustomerEmailInput(scanner, "Please enter the new email address for this Customer.");
+        try {
+            customer.setEmail(newEmail);
+            System.out.println("The Customer's email address was successfully updated from " + oldEmail + " to " + newEmail + "!");
+        } 
+        catch (Exception e){
+            System.out.println("Uh Oh! We were unable to update this Customer's email.");
+        }
+    }
+
+    private static void updateCustomerPhoneNumber(Scanner scanner,  Customer customer){
+        System.out.println("\n----- Update " + customer.getName() + "'s Phone Number -----\n");
+        String oldPhone = customer.getPhoneNumber();
+        String newPhone = getPhoneNumberInput(scanner, "Please enter the new phone number for this Customer.");
+        try {
+            customer.setPhoneNumber(newPhone);
+            System.out.println("The Customer's phone number was successfully updated from " + oldPhone + " to " + newPhone + "!");
+        } 
+        catch (Exception e){
+            System.out.println("Uh Oh! We were unable to update this Customer's phone number.");
+        }
+
+    }
+
+    private static void updateCustomerAddress(Scanner scanner,  Customer customer){
+        System.out.println("\n----- Update " + customer.getName() + "'s Address -----\n");
+        String address = getStringInput(scanner, "Please enter the new adddress for this Customer.");
+        String postcode = getStringInput(scanner, "Please enter the new postcode for this Customer.");
+        try {
+            customer.setAddress(address);
+            customer.setPostcode(postcode);
+            System.out.println("The Customer's address was successfully updated to" + address + ", " + postcode + "!");
+        } 
+        catch (Exception e){
+            System.out.println("Uh Oh! We were unable to update this Customer's address.");
+        }
+
+    }
 
     private static int getInventoryManagementMenuOption(Scanner scanner){
         String menuText= "Please select the corresponding number (1-6) from the menu below:\n 1. View All Items In Stock \n 2. View All Items Low In Stock\n 3. View All Items Out Of Stock\n 4. Change An Item's 'Low In Stock' Threshold\n 5. Change An Item's Price Markup Multiplier\n 6. Back to Main Menu";
