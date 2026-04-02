@@ -265,9 +265,9 @@ public class Main {
     }
 
     private static int getSupplierManagementMenuOption(Scanner scanner){
-        String menuText= "Please select the corresponding number (1-5) from the menu below:\n 1. View All Suppliers\n 2. Add New Supplier\n 3. Delete Supplier \n 4. Update Supplier Details \n 5. Back to Main Menu";
+        String menuText= "Please select the corresponding number (1-6) from the menu below:\n 1. View All Suppliers\n 2. Add New Supplier\n 3. Delete Supplier \n 4. Update Supplier Details \n 5. View The Order History Of A Supplier \n 6. Back to Main Menu";
         System.out.println("\n----- Supplier Management ----- \n\nWhat would you like to do?\n" + menuText);
-        return getNumberOption(scanner, 5, menuText);
+        return getNumberOption(scanner, 6, menuText);
     }
 
     private static void handleSupplierManagementMenu(Scanner scanner){
@@ -285,6 +285,9 @@ public class Main {
                 updateSupplierDetails(scanner);
             break;
             case 5:
+                viewOrderHistoryOfSupplier(scanner);
+            break;
+            case 6:
                 handleMainMenu(scanner);
             break;
         }
@@ -331,7 +334,7 @@ public class Main {
     }
 
     private static void updateSupplierDetails(Scanner scanner){
-        Supplier supplier = getExistingSupplierByEmail(scanner, "Please enter the email address of the Supplier who's details you want to update.");
+        Supplier supplier = getExistingSupplierByEmail(scanner, "Please enter the email address of the Supplier whose details you want to update.");
         handleUpdateSupplierDetailsMenu(scanner, supplier);
 
     }
@@ -453,10 +456,20 @@ public class Main {
 
     }
 
- private static int getCustomerManagementMenuOption(Scanner scanner){
-        String menuText= "Please select the corresponding number (1-5) from the menu below:\n 1. View All Customers\n 2. Add New Customer\n 3. Delete Customer \n 4. Update Customer Details \n 5. Back to Main Menu";
-        System.out.println("\n----- Supplier Management ----- \n\nWhat would you like to do?\n" + menuText);
-        return getNumberOption(scanner, 5, menuText);
+    private static void viewOrderHistoryOfSupplier(Scanner scanner){
+        Supplier supplier = getExistingSupplierByEmail(scanner, "Please enter the email address of the Supplier that you want to view the Order History of.");
+        ArrayList<SupplierOrder> orderHistory = WHMS.getOrderHistoryOfSupplier(supplier);
+        int index = 0;
+        for (SupplierOrder order : orderHistory){
+            index++;
+            System.out.println(index + ". " + order.toString());
+        }
+    }
+
+    private static int getCustomerManagementMenuOption(Scanner scanner){
+        String menuText= "Please select the corresponding number (1-6) from the menu below:\n 1. View All Customers\n 2. Add New Customer\n 3. Delete Customer \n 4. Update Customer Details \n 5. View The Order History Of A Customer \n 6. Back to Main Menu";
+        System.out.println("\n----- Customer Management ----- \n\nWhat would you like to do?\n" + menuText);
+        return getNumberOption(scanner, 6, menuText);
     }
 
     private static void handleCustomerManagementMenu(Scanner scanner){
@@ -474,10 +487,13 @@ public class Main {
                 updateCustomerDetails(scanner);
             break;
             case 5:
+                viewOrderHistoryOfCustomer(scanner);
+            break;
+            case 6:
                 handleMainMenu(scanner);
             break;
         }
-        handleSupplierManagementMenu(scanner);
+        handleCustomerManagementMenu(scanner);
     }
 
     private static void displayAllCustomers(){
@@ -520,13 +536,13 @@ public class Main {
     }
 
     private static void updateCustomerDetails(Scanner scanner){
-        Customer customer = getExistingCustomerByEmail(scanner, "Please enter the email address of the Customer who's details you want to update.");
+        Customer customer = getExistingCustomerByEmail(scanner, "Please enter the email address of the Customer whose details you want to update.");
         handleUpdateCustomerDetailsMenu(scanner, customer);
 
     }
 
     private static int getUpdateCustomerDetailsMenuOption(Scanner scanner, Customer customer){
-        String menuText= "Please select the corresponding number (1-5) from the menu below:\n 1. Update Customer Name \n 2. Update Customer Email \n 3. Update Customer Phone Number \n 4. Update Customer Address  \n 5. Back to Supplier Management";
+        String menuText= "Please select the corresponding number (1-5) from the menu below:\n 1. Update Customer Name \n 2. Update Customer Email \n 3. Update Customer Phone Number \n 4. Update Customer Address  \n 5. Back to Customer Management";
         System.out.println("\n----- " + customer.getName() + " Supplier Details ----- \n\nWhat would you like to do?\n" + menuText);
         return getNumberOption(scanner, 5, menuText);
     }
@@ -606,6 +622,17 @@ public class Main {
             System.out.println("Uh Oh! We were unable to update this Customer's address.");
         }
 
+    }
+
+
+    private static void viewOrderHistoryOfCustomer(Scanner scanner){
+        Customer customer = getExistingCustomerByEmail(scanner, "Please enter the email address of the Customer that you want to view the Order History of.");
+        ArrayList<CustomerOrder> orderHistory = WHMS.getOrderHistoryOfCustomer(customer);
+        int index = 0;
+        for (CustomerOrder order : orderHistory){
+            index++;
+            System.out.println(index + ". " + order.toString());
+        }
     }
 
     private static int getInventoryManagementMenuOption(Scanner scanner){
