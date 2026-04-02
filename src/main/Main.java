@@ -482,4 +482,92 @@ public class Main {
         
     }
 
+    private static int getOrderManagementMenuOption(Scanner scanner){
+        String menuText= "Please select the corresponding number (1-7) from the menu below:\n 1. View Outstanding Supplier Orders\n 2. View Outstanding Customer Orders\n 3. Place New Supplier Order \n 4. Place New Customer Order \n 5. Mark Supplier Order As Delivered \n 5. Mark Customer Order As Delivered \n 7. Back to Main Menu";
+        System.out.println("\n----- Order Management ----- \n\nWhat would you like to do?\n" + menuText);
+        return getNumberOption(scanner, 7, menuText);
+    }
+
+    private static void handleOrderManagementMenu(Scanner scanner){
+        switch (getOrderManagementMenuOption(scanner)){
+            case 1:
+               displayOutstandingSupplierOrders();
+            break;
+            case 2:
+                displayOutstandingCustomerOrders();
+            break;
+            case 3:
+                placeSupplierOrder(scanner);
+            break;
+            case 4:
+               // placeCustomerOrder(scanner);
+            break;
+            case 5:
+               // markSupplierOrderDelivered(scanner);
+            break;
+            case 6:
+               // markCustomerOrderDelivered(scanner);
+            break;
+            case 7:
+                handleMainMenu(scanner);
+            break;
+        }
+        handleOrderManagementMenu(scanner);
+    }
+
+    private static void displayOutstandingSupplierOrders(){
+        System.out.println("\n----- Outstanding Supplier Orders -----\n");
+        ArrayList<SupplierOrder> orders = WHMS.supplierOrderManager.getOutstandingOrders();
+        int index = 0;
+        for (SupplierOrder order : orders){
+            index++;
+            System.out.println(index + ". " + order.toString());
+        }
+    }
+
+    private static void displayOutstandingCustomerOrders(){
+        System.out.println("\n----- Outstanding Customer Orders -----\n");
+        ArrayList<CustomerOrder> orders = WHMS.customerOrderManager.getOutstandingOrders();
+        int index = 0;
+        for (CustomerOrder order : orders){
+            index++;
+            System.out.println(index + ". " + order.toString());
+        }
+    }
+
+    private static void placeSupplierOrder(Scanner scanner){
+        System.out.println("\n----- Place Supplier Order -----\n");
+        Supplier supplier = getExistingSupplierByEmail(scanner, "Please enter the email address of the Supplier that you would like to buy from.");
+        ArrayList<QuantityItem> basket = new ArrayList<>();
+        boolean addAnother = true;
+
+        while (addAnother){
+            Item item = findItemfromSupplier(scanner, "Please enter the name of the item that you want to purchase from " + supplier.getName() + ".", supplier);
+            int quantity = getIntInput(scanner, "How many " + item.getName() + "s would you like to order?");
+            try {
+                basket.add(new QuantityItem(item, quantity));
+                System.out.println(quantity + " " + item.getName() + "s have been added to your order!");
+            }
+            catch (Exception e){
+                System.out.println("Uh Oh! We were unable to add " + quantity + " " + item.getName() + "s to your order.");
+
+            }
+
+            addAnother = getYesNoInput(scanner, "Would you like to buy any other items from this Supplier?");
+
+        }
+    
+        try {
+            new SupplierOrder(supplier, basket);
+            System.out.println("Your order from" + supplier + " has has been sucessfully placed.");
+
+        }
+        catch (Exception e){
+            
+            System.out.println("Uh Oh! We were unable to place your order.");
+
+        }
+
+    }
+    
 }
