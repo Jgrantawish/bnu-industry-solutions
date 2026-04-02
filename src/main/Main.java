@@ -25,14 +25,14 @@ public class Main {
     }
 
     private static void createDummySuppliers(){
-        WHMS.supplierManager.addContact(new Supplier("SuperBricksRUs", "sales@superbricks.com", null, null, "OX4 3TZ"));
-        WHMS.supplierManager.addContact(new Supplier("Tom Drew", "tom@gmail.com", null, null, null));
-        WHMS.supplierManager.addContact(new Supplier("SuperBricksRUs", "super@bricks.ru", null, null, null));
-        WHMS.supplierManager.addContact(new Supplier("Screw4You", "bob@screws4you.co.uk", null, null, null));
+        WHMS.addSupplier("SuperBricksRUs", "sales@superbricks.com", null, null, "OX4 3TZ");
+        WHMS.addSupplier("Tom Drew", "tom@gmail.com", null, null, null);
+        WHMS.addSupplier("SuperBricksRUs", "super@bricks.ru", null, null, null);
+        WHMS.addSupplier("Screw4You", "bob@screws4you.co.uk", null, null, null);
     }
 
     private static void createDummySupplierOrders(){
-        WHMS.supplierOrderManager.addOrder(new SupplierOrder(null, null));
+        WHMS.placeSupplierOrder(null, null);
 
 
     }
@@ -134,7 +134,7 @@ public class Main {
 
     private static String getNewSupplierEmailInput(Scanner scanner, String prompt){
         String input = getEmailInput(scanner, prompt);
-        while (WHMS.supplierManager.findContactByEmail(input) != null) {
+        while (WHMS.findSupplierByEmail(input) != null) {
             System.out.println("Uh Oh! This email address is already in use. ");
             input = getEmailInput(scanner, prompt);
         }
@@ -143,16 +143,16 @@ public class Main {
 
      private static Supplier getExistingSupplierByEmail(Scanner scanner, String prompt){
         String input = getEmailInput(scanner, prompt);
-        while (WHMS.supplierManager.findContactByEmail(input) == null) {
+        while (WHMS.findSupplierByEmail(input) == null) {
             System.out.println("Uh Oh! There is no Supplier with this email address. ");
             input = getEmailInput(scanner, prompt);
         }
-        return WHMS.supplierManager.findContactByEmail(input);
+        return WHMS.findSupplierByEmail(input);
     }
 
     private static String getNewCustomerEmailInput(Scanner scanner, String prompt){
         String input = getEmailInput(scanner, prompt);
-        while (WHMS.customerManager.findContactByEmail(input) != null) {
+        while (WHMS.findCustomerByEmail(input) != null) {
             System.out.println("Uh Oh! This email address is already in use. ");
             input = getEmailInput(scanner, prompt);
         }
@@ -161,11 +161,11 @@ public class Main {
 
      private static Customer getExistingCustomerByEmail(Scanner scanner, String prompt){
         String input = getEmailInput(scanner, prompt);
-        while (WHMS.customerManager.findContactByEmail(input) == null) {
+        while (WHMS.findCustomerByEmail(input) == null) {
             System.out.println("Uh Oh! There is no Customer with this email address. ");
             input = getEmailInput(scanner, prompt);
         }
-        return WHMS.customerManager.findContactByEmail(input);
+        return WHMS.findCustomerByEmail(input);
     }
 
     private static String getNewItemNameInput(Scanner scanner, String prompt){
@@ -188,29 +188,29 @@ public class Main {
 
     private static InventoryStock findInventoryStockItem(Scanner scanner, String prompt){
         String input = getStringInput(scanner, prompt);
-        while (WHMS.inventoryManager.findInventoryStockItemByName(input) == null) {
+        while (WHMS.findInventoryStockItemByName(input) == null) {
             System.out.println("Uh Oh! There is no Item with this name. ");
             input = getStringInput(scanner, prompt);
         }
-        return WHMS.inventoryManager.findInventoryStockItemByName(input); 
+        return WHMS.findInventoryStockItemByName(input); 
     }
 
     private static SupplierOrder findOustandingSupplierOrderById(Scanner scanner, String prompt){
         int input = getIntInput(scanner, prompt);
-        while (WHMS.supplierOrderManager.findOutstandingOrderById(input) == null) {
+        while (WHMS.findOutstandingSupplierOrderById(input) == null) {
             System.out.println("Uh Oh! We could not find an outstanding supplier order with an ID of " + input + ". ");
             input = getIntInput(scanner, prompt);
         }
-        return WHMS.supplierOrderManager.findOutstandingOrderById(input); 
+        return WHMS.findOutstandingSupplierOrderById(input); 
     }
 
     private static CustomerOrder findOutstandingCustomerOrderById(Scanner scanner, String prompt){
         int input = getIntInput(scanner, prompt);
-        while (WHMS.customerOrderManager.findOutstandingOrderById(input) == null) {
+        while (WHMS.findOutstandingCustomerOrderById(input) == null) {
             System.out.println("Uh Oh! We could not find an outstanding customer order with an ID of " + input + ". ");
             input = getIntInput(scanner, prompt);
         }
-        return WHMS.customerOrderManager.findOutstandingOrderById(input); 
+        return WHMS.findOutstandingCustomerOrderById(input); 
     }
     
 
@@ -296,7 +296,7 @@ public class Main {
 
     private static void displayAllSuppliers(){
         System.out.println("\n----- All Suppliers -----");
-        ArrayList<Supplier> suppliers = WHMS.supplierManager.getContacts();
+        ArrayList<Supplier> suppliers = WHMS.getSuppliers();
         int index = 0;
         for (Supplier supplier : suppliers){
             index++;
@@ -313,7 +313,7 @@ public class Main {
         String postcode = getStringInput(scanner, "Please enter the Supplier's postcode.");
 
         try {
-            WHMS.supplierManager.addContact(new Supplier(name, email, phone, address, postcode));
+            WHMS.addSupplier(name, email, phone, address, postcode);
             System.out.println("Your new Supplier " + name + " has been successfully added!");
         } 
         catch (Exception e){
@@ -325,7 +325,7 @@ public class Main {
         System.out.println("\n----- Delete Supplier -----");
         Supplier supplier = getExistingSupplierByEmail(scanner, "Please enter the email address of the Supplier that you want to delete.");
         try {
-            WHMS.supplierManager.deleteContact(supplier);
+            WHMS.deleteSupplier(supplier);
             System.out.println("The Supplier was successfully deleted!");
         } 
         catch (Exception e){
@@ -498,7 +498,7 @@ public class Main {
 
     private static void displayAllCustomers(){
         System.out.println("\n----- All Customers -----");
-        ArrayList<Customer> customers = WHMS.customerManager.getContacts();
+        ArrayList<Customer> customers = WHMS.getCustomers();
         int index = 0;
         for (Customer customer : customers){
             index++;
@@ -515,7 +515,7 @@ public class Main {
         String postcode = getStringInput(scanner, "Please enter the Customer's postcode.");
 
         try {
-            WHMS.customerManager.addContact(new Customer(name, email, phone, address, postcode));
+            WHMS.addCustomer(name, email, phone, address, postcode);
             System.out.println("Your new Customer " + name + " has been successfully added!");
         } 
         catch (Exception e){
@@ -527,7 +527,7 @@ public class Main {
         System.out.println("\n----- Delete Customer -----");
         Customer customer = getExistingCustomerByEmail(scanner, "Please enter the email address of the Customer that you want to delete.");
         try {
-            WHMS.customerManager.deleteContact(customer);
+            WHMS.deleteCustomer(customer);
             System.out.println("The Customer was successfully deleted!");
         } 
         catch (Exception e){
@@ -675,19 +675,19 @@ public class Main {
 
     private static void displayItemsInStock(){
         System.out.println("\n----- Items In Stock -----\n");
-        ArrayList<InventoryStock> items = WHMS.inventoryManager.getAllItemInStock();
+        ArrayList<InventoryStock> items = WHMS.getInStockItems();
         displayInventoryItemsList(items);
     }
 
     private static void displayItemsLowInStock(){
         System.out.println("\n----- Items Low In Stock -----\n");
-        ArrayList<InventoryStock> items = WHMS.inventoryManager.getItemsLowInStock();
+        ArrayList<InventoryStock> items = WHMS.getLowInStockItems();
         displayInventoryItemsList(items);
     }
 
     private static void displayItemsOutOfStock(){
         System.out.println("\n----- Items Out Of Stock -----\n");
-        ArrayList<InventoryStock> items = WHMS.inventoryManager.getItemsOutOfStock();
+        ArrayList<InventoryStock> items = WHMS.getOutOfStockItems();
         displayInventoryItemsList(items);
     }
 
@@ -753,7 +753,7 @@ public class Main {
 
     private static void displayOutstandingSupplierOrders(){
         System.out.println("\n----- Outstanding Supplier Orders -----\n");
-        ArrayList<SupplierOrder> orders = WHMS.supplierOrderManager.getOutstandingOrders();
+        ArrayList<SupplierOrder> orders = WHMS.getOutstandingSupplierOrders();
         int index = 0;
         for (SupplierOrder order : orders){
             index++;
@@ -763,7 +763,7 @@ public class Main {
 
     private static void displayOutstandingCustomerOrders(){
         System.out.println("\n----- Outstanding Customer Orders -----\n");
-        ArrayList<CustomerOrder> orders = WHMS.customerOrderManager.getOutstandingOrders();
+        ArrayList<CustomerOrder> orders = WHMS.getOutstandingCustomerOrders();
         int index = 0;
         for (CustomerOrder order : orders){
             index++;
@@ -794,7 +794,7 @@ public class Main {
         }
     
         try {
-            WHMS.supplierOrderManager.addOrder(new SupplierOrder(supplier, basket));
+            WHMS.placeSupplierOrder(supplier, basket);
             System.out.println("Your order from" + supplier + " has has been sucessfully placed.");
 
         }
@@ -860,7 +860,7 @@ public class Main {
         CustomerOrder order = findOutstandingCustomerOrderById(scanner, "Please enter the Order ID of the customer order that has been delivered");
         try {
             
-            order.markAsDelivered();
+            WHMS.markCustomerOrderAsDelivered(order);
             System.out.println("Order " + order.getId() + " has been successfully marked as delivered.");
 
         }

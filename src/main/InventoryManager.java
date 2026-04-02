@@ -10,7 +10,7 @@ public class InventoryManager{
         this.allStock.add(stockItem);
     }
 
-    public ArrayList<InventoryStock> getAllItemInStock(){
+    public ArrayList<InventoryStock> getAllItemsInStock(){
          ArrayList<InventoryStock> itemsInStock = new ArrayList<>();
         for (InventoryStock stockItem : this.allStock){
             if (!stockItem.isOut()){
