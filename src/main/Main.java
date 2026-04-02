@@ -767,7 +767,7 @@ public class Main {
         }
     
         try {
-            new SupplierOrder(supplier, basket);
+            WHMS.supplierOrderManager.addOrder(new SupplierOrder(supplier, basket));
             System.out.println("Your order from" + supplier + " has has been sucessfully placed.");
 
         }
@@ -781,8 +781,7 @@ public class Main {
     
     private static void placeCustomerOrder(Scanner scanner){
         System.out.println("\n----- Place Customer Order -----\n");
-        
-        // find customer
+        Customer customer = getExistingCustomerByEmail(scanner, "Please enter the email address of the Customer that would like to make an order.");
         ArrayList<SellItem> basket = new ArrayList<>();
         boolean addAnother = true;
         while (addAnother){
@@ -801,9 +800,8 @@ public class Main {
     
         try {
 
-            WHMS.placeCustomerOrder();
-           // new CustomerOrder(customer , basket);
-           //reduce stockItem
+            WHMS.placeCustomerOrder(customer, basket);
+        
         }
         catch (Exception e){
 

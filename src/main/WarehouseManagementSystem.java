@@ -34,9 +34,12 @@ public class WarehouseManagementSystem {
         return null;
     } 
 
-    public void placeCustomerOrder(){
-        
-
+    public void placeCustomerOrder(Customer customer, ArrayList<SellItem> basket){
+        customerOrderManager.addOrder(new CustomerOrder(customer , basket));
+        for (SellItem item: basket){
+            InventoryStock stockItem = inventoryManager.findInventoryStockItemByName(item.getName());
+            stockItem.reduceStock(item);
+        }
     }
 
     public void markSupplierOrderAsDelivered(SupplierOrder order){
