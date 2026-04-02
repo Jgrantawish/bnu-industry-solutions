@@ -227,7 +227,7 @@ public class Main {
                             handleSupplierManagementMenu(scanner);
                         break;
                         case 2:
-                        //handleCustomerManagementMenu(scanner);
+                            //handleCustomerManagementMenu(scanner);
                         break;
                         case 3:
                             handleInventoryManagementMenu(scanner);
@@ -236,7 +236,7 @@ public class Main {
                             handleOrderManagementMenu(scanner);
                         break;
                         case 5:
-                        //handleFinanceManagementMenu(scanner);
+                            //handleFinanceManagementMenu(scanner);
                         break;
                         case 6:
                         // Exits the program
@@ -537,7 +537,7 @@ public class Main {
                 placeSupplierOrder(scanner);
             break;
             case 4:
-               // placeCustomerOrder(scanner);
+                placeCustomerOrder(scanner);
             break;
             case 5:
                 markSupplierOrderDelivered(scanner);
@@ -607,6 +607,39 @@ public class Main {
 
     }
     
+    private static void placeCustomerOrder(Scanner scanner){
+        System.out.println("\n----- Place Customer Order -----\n");
+        
+        // find customer
+        ArrayList<SellItem> basket = new ArrayList<>();
+        boolean addAnother = true;
+        while (addAnother){
+            InventoryStock stockItem = findInventoryStockItem(scanner, "Please enter the name of the item that you woud like to buy.");
+            if (!stockItem.isOut()){
+                int quantity = getInStockQuantity(scanner, "How many " + stockItem.getName() + "s would you like to buy?", stockItem);
+                SellItem sellItem = new SellItem(stockItem.getName(), stockItem.getDescription(), stockItem.getAveragePurchasePrice(), stockItem.getSupplier(), quantity, stockItem.getCurrentSellPrice());
+                basket.add(sellItem);
+            }
+            else {
+                System.out.println("Uh Oh! This item is currently out of stock.");
+            }
+    
+            addAnother = getYesNoInput(scanner, "Would you like to buy any other items?");
+        }
+    
+        try {
+
+            WHMS.placeCustomerOrder();
+           // new CustomerOrder(customer , basket);
+           //reduce stockItem
+        }
+        catch (Exception e){
+
+            System.out.println("Uh Oh! We were unable to place your order.");
+
+        }
+    }
+
 
     private static void markSupplierOrderDelivered(Scanner scanner){
         System.out.println("\n----- Mark Supplier Order Delivered -----\n");

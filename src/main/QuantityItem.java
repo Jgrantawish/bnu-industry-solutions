@@ -6,10 +6,10 @@ public class QuantityItem extends Item{
         this.quantity = quantity;
     }
 
-    // Copy constructor used by SellItems
-    protected QuantityItem(QuantityItem itemToCopy){
-        super(itemToCopy);
-        this.quantity = itemToCopy.quantity;
+    // Constructor used by SellItems
+    protected QuantityItem(String itemName, String description, double purchasePrice, Supplier supplier, int quantity){
+        super(itemName, description, purchasePrice, supplier);
+        this.quantity = quantity;
     }
 
     public int getQuantity(){

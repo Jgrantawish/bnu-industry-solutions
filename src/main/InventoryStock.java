@@ -38,7 +38,7 @@ public class InventoryStock {
         return (this.stockLevel == 0);
     }
 
-    public boolean checkEnoughInStock(int quantity){
+    public boolean enoughInStock(int quantity){
         return (this.stockLevel >= quantity);
     }
     
@@ -48,12 +48,24 @@ public class InventoryStock {
         this.stockLevel =+ quantityItem.getQuantity();
     }
 
-    public void reduceStock(QuantityItem quantityItem){
-        this.stockLevel =- quantityItem.getQuantity();
+    public void reduceStock(SellItem sellItem){
+        this.stockLevel =- sellItem.getQuantity();
     }
 
     public String getName(){
         return this.name;
+    }
+
+    public String getDescription(){
+        return this.description;
+    }
+
+    public Supplier getSupplier(){
+        return this.supplier;
+    }
+
+    public double getAveragePurchasePrice(){
+        return this.avgPurchasePrice;
     }
 
     public int getCurrentStockLevel(){

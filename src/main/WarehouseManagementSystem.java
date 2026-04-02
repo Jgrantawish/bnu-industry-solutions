@@ -10,6 +10,7 @@ public class WarehouseManagementSystem {
 
     public WarehouseManagementSystem(){
 
+
     }
 
     private ArrayList<Item> getAllSupplierItems(){
@@ -32,6 +33,11 @@ public class WarehouseManagementSystem {
         }
         return null;
     } 
+
+    public void placeCustomerOrder(){
+        
+
+    }
 
     public void markSupplierOrderAsDelivered(SupplierOrder order){
         order.markAsDelivered();

@@ -16,5 +16,9 @@ public class Customer extends Contact {
         return this.orderHistory;
 
     }
+
+    public String toString(){
+        return this.getName()+ " -- " + this.getEmail() + " -- " + this.getPhoneNumber() + " -- " + this.getAddress() + ", " + this.getPostcode();
+    }
     
 }

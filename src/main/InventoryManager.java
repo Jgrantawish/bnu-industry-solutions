@@ -3,6 +3,13 @@ import java.util.ArrayList;
 public class InventoryManager{
     private ArrayList<InventoryStock> allStock = new ArrayList<>();
 
+    public InventoryManager(){
+    }
+
+    public void addInventoryStock(InventoryStock stockItem){
+        this.allStock.add(stockItem);
+    }
+
     public ArrayList<InventoryStock> getAllItemInStock(){
          ArrayList<InventoryStock> itemsInStock = new ArrayList<>();
         for (InventoryStock stockItem : this.allStock){

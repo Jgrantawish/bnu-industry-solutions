@@ -1,8 +1,8 @@
 public class SellItem extends QuantityItem{
     private double unitSellPrice;
     
-    public SellItem(QuantityItem quantityItem, double unitSellPrice){
-        super(quantityItem);
+    public SellItem(String itemName, String description, double avgPurchasePrice, Supplier supplier, int quantity, double unitSellPrice){
+        super(itemName, description, avgPurchasePrice, supplier, quantity);
         this.unitSellPrice = unitSellPrice;
     }
 
