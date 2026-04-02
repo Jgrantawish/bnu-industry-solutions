@@ -13,7 +13,7 @@ public abstract class Order {
 
     }
 
-    public int getOrderId(){
+    public int getId(){
         return this.orderId;
     }
 

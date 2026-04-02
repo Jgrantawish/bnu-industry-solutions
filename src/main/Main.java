@@ -31,7 +31,9 @@ public class Main {
         WHMS.supplierManager.addContact(new Supplier("Screw4You", "bob@screws4you.co.uk", null, null, null));
     }
 
-    private static void createDummyPurchaseOrders(){
+    private static void createDummySupplierOrders(){
+        WHMS.supplierOrderManager.addOrder(new SupplierOrder(null, null));
+
 
     }
    
@@ -120,6 +122,15 @@ public class Main {
         }
     }
 
+    private static int getInStockQuantity(Scanner scanner, String prompt, InventoryStock stockItem){
+        int quantity = getIntInput(scanner, prompt);
+            while (!stockItem.enoughInStock(quantity)){
+                System.out.println("Uh Oh! There are only " + stockItem.getCurrentStockLevel() + " " + stockItem.getName() + "s left in stock. ");
+                quantity = getIntInput(scanner, prompt);
+            }
+        return quantity;
+    }
+
 
     private static String getNewSupplierEmailInput(Scanner scanner, String prompt){
         String input = getEmailInput(scanner, prompt);
@@ -155,6 +166,33 @@ public class Main {
             input = getStringInput(scanner, prompt);
         }
         return supplier.findItemByName(input); 
+    }
+
+    private static InventoryStock findInventoryStockItem(Scanner scanner, String prompt){
+        String input = getStringInput(scanner, prompt);
+        while (WHMS.inventoryManager.findInventoryStockItemByName(input) == null) {
+            System.out.println("Uh Oh! There is no Item with this name. ");
+            input = getStringInput(scanner, prompt);
+        }
+        return WHMS.inventoryManager.findInventoryStockItemByName(input); 
+    }
+
+    private static SupplierOrder findOustandingSupplierOrderById(Scanner scanner, String prompt){
+        int input = getIntInput(scanner, prompt);
+        while (WHMS.supplierOrderManager.findOutstandingOrderById(input) == null) {
+            System.out.println("Uh Oh! We could not find an outstanding supplier order with an ID of " + input + ". ");
+            input = getIntInput(scanner, prompt);
+        }
+        return WHMS.supplierOrderManager.findOutstandingOrderById(input); 
+    }
+
+    private static CustomerOrder findOutstandingCustomerOrderById(Scanner scanner, String prompt){
+        int input = getIntInput(scanner, prompt);
+        while (WHMS.customerOrderManager.findOutstandingOrderById(input) == null) {
+            System.out.println("Uh Oh! We could not find an outstanding customer order with an ID of " + input + ". ");
+            input = getIntInput(scanner, prompt);
+        }
+        return WHMS.customerOrderManager.findOutstandingOrderById(input); 
     }
     
 
@@ -192,11 +230,10 @@ public class Main {
                         //handleCustomerManagementMenu(scanner);
                         break;
                         case 3:
-                        //handleInventoryManagementMenu(scanner);
+                            handleInventoryManagementMenu(scanner);
                         break;
                         case 4:
-                        //handleOrderManagementMenu(scanner);
-                        // place co, po,  
+                            handleOrderManagementMenu(scanner);
                         break;
                         case 5:
                         //handleFinanceManagementMenu(scanner);
@@ -503,10 +540,10 @@ public class Main {
                // placeCustomerOrder(scanner);
             break;
             case 5:
-               // markSupplierOrderDelivered(scanner);
+                markSupplierOrderDelivered(scanner);
             break;
             case 6:
-               // markCustomerOrderDelivered(scanner);
+                markCustomerOrderDelivered(scanner);
             break;
             case 7:
                 handleMainMenu(scanner);
@@ -565,6 +602,41 @@ public class Main {
         catch (Exception e){
             
             System.out.println("Uh Oh! We were unable to place your order.");
+
+        }
+
+    }
+    
+
+    private static void markSupplierOrderDelivered(Scanner scanner){
+        System.out.println("\n----- Mark Supplier Order Delivered -----\n");
+        SupplierOrder order = findOustandingSupplierOrderById(scanner, "Please enter the Order ID of the supplier order that has arrived");
+        try {
+
+            WHMS.markSupplierOrderAsDelivered(order);
+            System.out.println(".");
+
+        }
+        catch (Exception e){
+
+            System.out.println("Uh Oh! We were unable to place your order.");
+
+        }
+
+    }
+
+    private static void markCustomerOrderDelivered(Scanner scanner){
+        System.out.println("\n----- Mark Customer Order Delivered -----\n");
+        CustomerOrder order = findOutstandingCustomerOrderById(scanner, "Please enter the Order ID of the customer order that has been delivered");
+        try {
+            
+            order.markAsDelivered();
+            System.out.println("Order " + order.getId() + " has been successfully marked as delivered.");
+
+        }
+        catch (Exception e){
+
+            System.out.println("Uh Oh! We were unable to mark Order " + order.getId() + " as delivered.");
 
         }
 

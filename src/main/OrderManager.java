@@ -24,4 +24,13 @@ public class OrderManager <T extends Order> {
         return outstandingOrders;
     }
 
+    public T findOutstandingOrderById(int id){
+        for (T order : this.getOutstandingOrders()){
+            if (order.getId() == id){
+                return order;
+            }
+        }
+        return null;
+    } 
+
 }

@@ -28,7 +28,7 @@ public class SupplierOrder extends Order{
 
     public String toString(){
         String orderSummaryString = this.orderItemsToString();
-        return "Order ID: " + this.getOrderId() + " -- From supplier " + this.supplier.getName() + " on " + this.getDate() + " -- Summary: " + orderSummaryString + " -- Status: " + this.getStatus();
+        return "Order ID: " + this.getId() + " -- From supplier " + this.supplier.getName() + " on " + this.getDate() + " -- Summary: " + orderSummaryString + " -- Status: " + this.getStatus();
     }
     
 }

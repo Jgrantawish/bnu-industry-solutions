@@ -33,6 +33,20 @@ public class WarehouseManagementSystem {
         return null;
     } 
 
+    public void markSupplierOrderAsDelivered(SupplierOrder order){
+        order.markAsDelivered();
+        ArrayList<QuantityItem> orderedItems = order.getBasket();
+        for (QuantityItem item: orderedItems){
+            InventoryStock stockItem = inventoryManager.findInventoryStockItemByName(item.getName());
+            if (stockItem != null){
+                stockItem.addStock(item);
+            }
+            else {
+                inventoryManager.addInventoryStock(new InventoryStock(item));
+            }
+        }
+    }
+
 
 
 }
