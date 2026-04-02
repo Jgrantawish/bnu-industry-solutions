@@ -1,38 +1,27 @@
 import java.util.ArrayList;
 
-public class OrderManager {
-    private ArrayList<SupplierOrder> allSupplierOrders = new ArrayList<>();;
-    private ArrayList<CustomerOrder> allCustomerOrders = new ArrayList<>();;
+public class OrderManager <T extends Order> {
+    private ArrayList<T> allOrders = new ArrayList<>();;
   
     public OrderManager(){
     }
 
-    public ArrayList<SupplierOrder> getAllSupplierOrders(){
-        return this.allSupplierOrders;
+    public void addOrder(T order){
+        this.allOrders.add(order);
     }
 
-    public ArrayList<CustomerOrder> getAllCustomerOrders(){
-        return this.allCustomerOrders;
+    public ArrayList<T> getAllOrders(){
+        return this.allOrders;
     }
 
-    public ArrayList<SupplierOrder> getOutstandingSupplierOrders(){
-        ArrayList<SupplierOrder> outstandingSupplierOrders = new ArrayList<>();
-        for (SupplierOrder order : this.allSupplierOrders){
+    public ArrayList<T> getOutstandingOrders(){
+        ArrayList<T> outstandingOrders = new ArrayList<>();
+        for (T order : this.allOrders){
             if (order.getStatus() == Status.ORDERED){
-                outstandingSupplierOrders.add(order);
+                outstandingOrders.add(order);
             }
         }
-        return outstandingSupplierOrders;
-    }
-
-    public ArrayList<CustomerOrder> getOutstandingCustomerOrders(){
-        ArrayList<CustomerOrder> outstandingCustomerOrders = new ArrayList<>();
-        for (CustomerOrder order : this.allCustomerOrders){
-            if (order.getStatus() == Status.ORDERED){
-                outstandingCustomerOrders.add(order);
-            }
-        }
-        return outstandingCustomerOrders;
+        return outstandingOrders;
     }
 
 }

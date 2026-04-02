@@ -2,8 +2,11 @@ import java.util.ArrayList;
 
 public class WarehouseManagementSystem {
     public ContactManager<Supplier> supplierManager = new ContactManager<Supplier>();
-    // public CustomerManager customerManager = new CustomerManager();
+    public ContactManager<Customer> customerManager = new ContactManager<Customer>();
     public InventoryManager inventoryManager = new InventoryManager();
+    public OrderManager<SupplierOrder> supplierOrderManager = new OrderManager<SupplierOrder>();
+    public OrderManager<CustomerOrder> customerOrderManager = new OrderManager<CustomerOrder>();
+
 
     public WarehouseManagementSystem(){
 
