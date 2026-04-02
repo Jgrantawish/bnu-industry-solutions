@@ -10,6 +10,10 @@ public class SupplierOrder extends Order{
         this.basket = basketItems;
     }
 
+    public Supplier getSupplier(){
+        return this.supplier;
+    }
+
     public ArrayList<QuantityItem> getBasket(){
         return this.basket;
     }

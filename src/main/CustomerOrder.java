@@ -10,6 +10,10 @@ public class CustomerOrder extends Order {
         this.basket = basketItems;
     }
 
+    public Customer getCustomer(){
+        return this.customer;
+    }
+
     private String orderItemsToString(){
         String orderItemsString = "";
         for (int i = 0; i < this.basket.size(); i++){

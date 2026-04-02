@@ -14,7 +14,7 @@ public class WarehouseManagementSystem {
     }
 
     private ArrayList<Item> getAllSupplierItems(){
-        ArrayList<Item> allSupplierItems = new ArrayList<Item>();
+        ArrayList<Item> allSupplierItems = new ArrayList<>();
         for (Supplier supplier : this.supplierManager.getContacts()){
             ArrayList<Item> supplierItems = supplier.getSupplierItems();
             for (Item item : supplierItems){
@@ -33,6 +33,29 @@ public class WarehouseManagementSystem {
         }
         return null;
     } 
+
+    public ArrayList<SupplierOrder> getOrderHistoryOfSupplier(Supplier supplier){
+        ArrayList<SupplierOrder> orderHistory = new ArrayList<>();
+        for (SupplierOrder order : supplierOrderManager.getAllOrders()){
+            if (order.getSupplier().equals(supplier)){
+                orderHistory.add(order);
+            }
+
+        }
+        return orderHistory;
+    }
+
+    public ArrayList<CustomerOrder> getOrderHistoryOfCustomer(Customer customer){
+        ArrayList<CustomerOrder> orderHistory = new ArrayList<>();
+        for (CustomerOrder order : customerOrderManager.getAllOrders()){
+            if (order.getCustomer().equals(customer)){
+                orderHistory.add(order);
+            }
+
+        }
+        return orderHistory;
+    }
+
 
     public void placeCustomerOrder(Customer customer, ArrayList<SellItem> basket){
         customerOrderManager.addOrder(new CustomerOrder(customer , basket));
@@ -55,7 +78,5 @@ public class WarehouseManagementSystem {
             }
         }
     }
-
-
 
 }
