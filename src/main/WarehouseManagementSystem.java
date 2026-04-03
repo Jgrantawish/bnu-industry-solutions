@@ -10,7 +10,6 @@ public class WarehouseManagementSystem {
 
     public WarehouseManagementSystem(){
 
-
     }
 
     private ArrayList<Item> getAllSupplierItems(){

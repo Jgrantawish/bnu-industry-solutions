@@ -4,7 +4,7 @@ public abstract class Order {
     private static int count = 0;
     private int orderId; 
     private LocalDate date;
-    private Status status = Status.ORDERED; 
+    private OrderStatus status = OrderStatus.ORDERED; 
     
     public Order(){
         this.orderId = ++count;
@@ -20,12 +20,12 @@ public abstract class Order {
         return this.date;
     }
 
-    public Status getStatus(){
+    public OrderStatus getStatus(){
         return this.status;
     }
 
     public void markAsDelivered(){
-        this.status = Status.DELIVERED; 
+        this.status = OrderStatus.DELIVERED; 
     }
 
 }

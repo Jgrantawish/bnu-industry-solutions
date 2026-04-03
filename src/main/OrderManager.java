@@ -17,7 +17,7 @@ public class OrderManager <T extends Order> {
     public ArrayList<T> getOutstandingOrders(){
         ArrayList<T> outstandingOrders = new ArrayList<>();
         for (T order : this.allOrders){
-            if (order.getStatus() == Status.ORDERED){
+            if (order.getStatus() == OrderStatus.ORDERED){
                 outstandingOrders.add(order);
             }
         }
@@ -32,5 +32,5 @@ public class OrderManager <T extends Order> {
         }
         return null;
     } 
-    
+
 }
