@@ -94,7 +94,7 @@ public class InventoryStock {
     }
 
     public String toString(){
-        return this.name + " -- " + this.description + " -- Current Stock Level: " + this.stockLevel + " -- Average Purchase Price: " + this.avgPurchasePrice + " -- Current Sell Price:  " + this.currentSellPrice + " -- Supplied by: " + this.supplier;
+        return this.name + " -- " + this.description + " -- Current Stock Level: " + this.stockLevel + " -- Average Purchase Price: " + this.avgPurchasePrice + " -- Current Sell Price:  " + this.currentSellPrice + " -- Supplied by: " + this.supplier.getName();
     }
 
     

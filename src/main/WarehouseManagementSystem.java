@@ -26,9 +26,13 @@ public class WarehouseManagementSystem {
 
     public void createDummyData(){
 
+        // Add Customers
+        this.addCustomer("Mike Scott", "m.scott@gmail.com", "018467967", "6B Ready Road, Wilkshire", "Y78 OBF");
+        this.addCustomer("Kim Kardashian", "kimmy@hotmail.com", "+1 4556 7998", "9 MoonBeam Lane, Icecream Central", "TPO ");
+
         // Create fake suppliers
         Supplier supplier1 = new Supplier("SuperBricksRUs", "sales@superbricks.com", "+1 568 67890", "69 Sue Lane, WaterBridge, Carringdon ", "CK67 069");
-        Supplier supplier2 = new Supplier("Tom Drew", "tom@gmail.com", "+44 6789 077001", "52 Tung Street, Oxford", "OX4 3TZ");
+        Supplier supplier2 = new Supplier("Tom Drew", "tom@gmail.com", "+44 6789 077001", "5 Tung Street, Oxford", "OX4 3TZ");
         Supplier supplier3 = new Supplier("Screws4You", "bob@screws4you.co.uk","+44 5670 989100", "64 Zoo Lane, Sahor", "PGB 365");
 
         // Add suppliers to SupplierManager
@@ -43,7 +47,6 @@ public class WarehouseManagementSystem {
         Item item4 = new Item("Lightbulb", "10w lightbulb", 0.75, supplier2);
         Item item5 = new Item("Gloves", "One size leather gloves", 2, supplier2);
         Item item6 = new Item("Screw", "Crosshead wood screw", 0.2, supplier3);
-
 
         // Add Items to Suppliers 
         supplier1.addItem(item1);
