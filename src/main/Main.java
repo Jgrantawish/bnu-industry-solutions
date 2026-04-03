@@ -168,7 +168,7 @@ public class Main {
     private static Item findItemfromSupplier(Scanner scanner, String prompt, Supplier supplier){
         String input = getStringInput(scanner, prompt);
         while (supplier.findItemByName(input) == null) {
-            System.out.println("Uh Oh! There is no Item with this name. ");
+            System.out.println("Uh Oh! " + supplier.getName() + " does not supply any items with this name. ");
             input = getStringInput(scanner, prompt);
         }
         return supplier.findItemByName(input); 
@@ -283,7 +283,7 @@ public class Main {
     }
 
     private static void displayAllSuppliers(){
-        System.out.println("\n----- All Suppliers -----");
+        System.out.println("\n----- All Suppliers -----\n");
         ArrayList<Supplier> suppliers = WHMS.getSuppliers();
         int index = 0;
         for (Supplier supplier : suppliers){
@@ -293,7 +293,7 @@ public class Main {
     }
 
     private static void addNewSupplier(Scanner scanner){
-        System.out.println("\n----- Add New Supplier -----");
+        System.out.println("\n----- Add New Supplier -----\n");
         String name = getStringInput(scanner, "Please enter the Supplier's name.");
         String email = getNewSupplierEmailInput(scanner, "Please enter the Supplier's email address.");
         String phone = getPhoneNumberInput(scanner, "Please enter the Supplier's phone number.");
@@ -310,7 +310,7 @@ public class Main {
     }
 
     private static void deleteSupplier(Scanner scanner){
-        System.out.println("\n----- Delete Supplier -----");
+        System.out.println("\n----- Delete Supplier -----\n");
         Supplier supplier = getExistingSupplierByEmail(scanner, "Please enter the email address of the Supplier that you want to delete.");
         try {
             WHMS.deleteSupplier(supplier);
@@ -366,8 +366,7 @@ public class Main {
         String description = getStringInput(scanner, "Please enter a description for this new item.");
         double price = getDoubleInput(scanner, "Please enter the unit price for this item.", "price");
         try {
-            Item newItem = new Item(itemName, description, price, supplier);
-            supplier.addItem(newItem);
+            WHMS.addSupplierItem(itemName, description, price, supplier);
             System.out.println("The Supplier " + supplier.getName() + " is now a supplier of " + itemName + " items!");
         }
         catch (Exception e){
@@ -381,7 +380,7 @@ public class Main {
         Item item = findItemfromSupplier(scanner,"Please enter the name of item no longer supplied by this Supplier." , supplier);
         try {
             supplier.deleteItem(item);
-            System.out.println("The Supplier item successfully removed!");
+            System.out.println(supplier.getName() + " is no longer a supplier of " +  item.getName() + " items!");
         } 
         catch (Exception e){
             System.out.println("Uh Oh! We were unable to remove the Supplier item.");
@@ -485,7 +484,7 @@ public class Main {
     }
 
     private static void displayAllCustomers(){
-        System.out.println("\n----- All Customers -----");
+        System.out.println("\n----- All Customers -----\n");
         ArrayList<Customer> customers = WHMS.getCustomers();
         int index = 0;
         for (Customer customer : customers){
@@ -495,7 +494,7 @@ public class Main {
     }
 
     private static void addNewCustomer(Scanner scanner){
-        System.out.println("\n----- Add New Customer -----");
+        System.out.println("\n----- Add New Customer -----\n");
         String name = getStringInput(scanner, "Please enter the Customer's name.");
         String email = getNewCustomerEmailInput(scanner, "Please enter the Customer's email address.");
         String phone = getPhoneNumberInput(scanner, "Please enter the Customer's phone number.");
@@ -512,7 +511,7 @@ public class Main {
     }
 
     private static void deleteCustomer(Scanner scanner){
-        System.out.println("\n----- Delete Customer -----");
+        System.out.println("\n----- Delete Customer -----\n");
         Customer customer = getExistingCustomerByEmail(scanner, "Please enter the email address of the Customer that you want to delete.");
         try {
             WHMS.deleteCustomer(customer);
@@ -625,7 +624,7 @@ public class Main {
 
     private static int getInventoryManagementMenuOption(Scanner scanner){
         String menuText= "Please select the corresponding number (1-6) from the menu below:\n 1. View All Items In Stock \n 2. View All Items Low In Stock\n 3. View All Items Out Of Stock\n 4. Change An Item's 'Low In Stock' Threshold\n 5. Change An Item's Price Markup Multiplier\n 6. Back to Main Menu";
-        System.out.println("\n----- Order Management ----- \n\nWhat would you like to do?\n" + menuText);
+        System.out.println("\n----- Inventory Management ----- \n\nWhat would you like to do?\n" + menuText);
         return getNumberOption(scanner, 6, menuText);
     }
 
@@ -707,7 +706,7 @@ public class Main {
     }
 
     private static int getOrderManagementMenuOption(Scanner scanner){
-        String menuText= "Please select the corresponding number (1-7) from the menu below:\n 1. View Outstanding Supplier Orders\n 2. View Outstanding Customer Orders\n 3. Place New Supplier Order \n 4. Place New Customer Order \n 5. Mark Supplier Order As Delivered \n 5. Mark Customer Order As Delivered \n 7. Back to Main Menu";
+        String menuText= "Please select the corresponding number (1-7) from the menu below:\n 1. View Outstanding Supplier Orders\n 2. View Outstanding Customer Orders\n 3. Place New Supplier Order \n 4. Place New Customer Order \n 5. Mark Supplier Order As Delivered \n 6. Mark Customer Order As Delivered \n 7. Back to Main Menu";
         System.out.println("\n----- Order Management ----- \n\nWhat would you like to do?\n" + menuText);
         return getNumberOption(scanner, 7, menuText);
     }
@@ -783,7 +782,7 @@ public class Main {
     
         try {
             WHMS.placeSupplierOrder(supplier, basket);
-            System.out.println("Your order from" + supplier + " has has been sucessfully placed.");
+            System.out.println("Your order from " + supplier.getName() + " has has been sucessfully placed.");
 
         }
         catch (Exception e){
@@ -816,6 +815,8 @@ public class Main {
         try {
 
             WHMS.placeCustomerOrder(customer, basket);
+            System.out.println("We have sucessfully placed an order for " + customer.getName() + ".");
+
         
         }
         catch (Exception e){
@@ -832,12 +833,12 @@ public class Main {
         try {
 
             WHMS.markSupplierOrderAsDelivered(order);
-            System.out.println(".");
+            System.out.println("Order " + order.getId() + " has been sucessfully marked as delivered.");
 
         }
         catch (Exception e){
 
-            System.out.println("Uh Oh! We were unable to place your order.");
+            System.out.println("Uh Oh! We were unable to mark Order " + order.getId() + " as delivered.");
 
         }
 

@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Customer extends Contact {    
 
     public Customer(String customerName, String email, String phone, String address, String postcode){
