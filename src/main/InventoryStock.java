@@ -12,7 +12,7 @@ public class InventoryStock {
         this.name = quantityItem.getName();
         this.description = quantityItem.getDescription();
         this.supplier = quantityItem.getSupplier();
-        this.stockLevel = 0;
+        this.stockLevel = quantityItem.getQuantity();
         this.markUpMultiplier = 1.5;
         this.lowStockThreshold = 5;
         this.calculateAvgPurchasePrice(quantityItem);
