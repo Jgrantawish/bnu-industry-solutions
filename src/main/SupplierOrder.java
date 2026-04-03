@@ -2,20 +2,22 @@ import java.util.ArrayList;
 
 public class SupplierOrder extends Order{
     private Supplier supplier;
-    private ArrayList<QuantityItem> basket = new ArrayList<>();; 
+    private ArrayList<QuantityItem> basket = new ArrayList<>();
+    private double totalCost;
 
     public SupplierOrder(Supplier supplier, ArrayList<QuantityItem> basketItems){
         super();
         this.supplier = supplier;
         this.basket = basketItems;
+        this.totalCost = calculateTotalCost();
     }
 
-    public Supplier getSupplier(){
-        return this.supplier;
-    }
-
-    public ArrayList<QuantityItem> getBasket(){
-        return this.basket;
+    private double calculateTotalCost(){
+        double cost = 0;
+        for (QuantityItem quantityItem : this.basket){
+            cost += (quantityItem.getQuantity() * quantityItem.getUnitPurchasePrice());
+        }
+        return cost;
     }
 
     private String orderItemsToString(){
@@ -28,6 +30,18 @@ public class SupplierOrder extends Order{
             }
         }
         return orderItemsString;
+    }
+
+    public Supplier getSupplier(){
+        return this.supplier;
+    }
+
+    public ArrayList<QuantityItem> getBasket(){
+        return this.basket;
+    }
+
+    public double getTotalCost(){
+        return this.totalCost;
     }
 
     public String toString(){
