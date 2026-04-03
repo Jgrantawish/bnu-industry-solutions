@@ -9,8 +9,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Adds some default suppliers at the start of the program
-        createDummySuppliers();
+        // Adds some default data at the start of the program
+        WHMS.createDummyData();
 
 
         System.out.println("Welcome to BNU Industry Solution's Warehouse Management System (WHMS)!");
@@ -22,19 +22,6 @@ public class Main {
 
         // Close out the scanner 
         scanner.close();
-    }
-
-    private static void createDummySuppliers(){
-        WHMS.addSupplier("SuperBricksRUs", "sales@superbricks.com", null, null, "OX4 3TZ");
-        WHMS.addSupplier("Tom Drew", "tom@gmail.com", null, null, null);
-        WHMS.addSupplier("SuperBricksRUs", "super@bricks.ru", null, null, null);
-        WHMS.addSupplier("Screw4You", "bob@screws4you.co.uk", null, null, null);
-    }
-
-    private static void createDummySupplierOrders(){
-        WHMS.placeSupplierOrder(null, null);
-
-
     }
    
     private static String getStringInput(Scanner scanner, String prompt){
