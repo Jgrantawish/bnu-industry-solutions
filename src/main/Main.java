@@ -74,7 +74,8 @@ public class Main {
     }
 
     private static int getIntInput(Scanner scanner, String prompt){
-        int input = 0;
+        System.out.println(prompt);
+        int input = -1;
         while (input < 0){
             if (scanner.hasNextInt()) {
                 input = scanner.nextInt();
