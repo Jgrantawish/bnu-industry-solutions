@@ -45,11 +45,11 @@ public class InventoryStock {
     public void addStock(QuantityItem quantityItem){
         this.calculateAvgPurchasePrice(quantityItem);
         this.calculateCurrentSellPrice();
-        this.stockLevel =+ quantityItem.getQuantity();
+        this.stockLevel += quantityItem.getQuantity();
     }
 
     public void reduceStock(SellItem sellItem){
-        this.stockLevel =- sellItem.getQuantity();
+        this.stockLevel -= sellItem.getQuantity();
     }
 
     public String getName(){
