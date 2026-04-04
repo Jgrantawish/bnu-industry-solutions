@@ -9,7 +9,6 @@ public abstract class Order {
     public Order(){
         this.orderId = ++count;
         this.date = LocalDate.now();
-
     }
 
     public int getId(){
