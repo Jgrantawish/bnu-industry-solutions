@@ -6,6 +6,7 @@ public class WarehouseManagementSystem {
     private InventoryManager inventoryManager = new InventoryManager();
     private OrderManager<SupplierOrder> supplierOrderManager = new OrderManager<SupplierOrder>();
     private OrderManager<CustomerOrder> customerOrderManager = new OrderManager<CustomerOrder>();
+    private FinanceManager financeManager = new FinanceManager(supplierOrderManager, customerOrderManager);
 
 
     public WarehouseManagementSystem(){
@@ -221,4 +222,7 @@ public class WarehouseManagementSystem {
         order.markAsDelivered();
     }
 
+    public String getFinancialReportString(int monthNumber){
+        return this.financeManager.generateMonthlyReport(monthNumber);
+    }
 }

@@ -242,7 +242,7 @@ public class Main {
                             handleOrderManagementMenu(scanner);
                         break;
                         case 5:
-                            //handleFinanceManagementMenu(scanner);
+                            handleFinanceManagementMenu(scanner);
                         break;
                         case 6:
                         // Exits the program
@@ -841,7 +841,6 @@ public class Main {
             System.out.println("Uh Oh! We were unable to mark Order " + order.getId() + " as delivered.");
 
         }
-
     }
 
     private static void markCustomerOrderDelivered(Scanner scanner){
@@ -858,7 +857,27 @@ public class Main {
             System.out.println("Uh Oh! We were unable to mark Order " + order.getId() + " as delivered.");
 
         }
+    }
 
+    private static int getFinanceManagementMenuOption(Scanner scanner){
+        String menuText= "Please select the corresponding number (1-13) from the menu below:\n 1. January\n 2. February\n 3. March \n 4. April \n 5. May \n 6. June \n 7. July \n 8. August \n 9. September \n 10. October \n 11. November \n 12. December \n 13. Back to Main Menu";
+        System.out.println("\n----- Finance Management ----- \n\nFor which month would you like to see the financial report for?\n" + menuText);
+        return getNumberOption(scanner, 13, menuText);
+    }
+
+    private static void handleFinanceManagementMenu(Scanner scanner){
+        int option = getFinanceManagementMenuOption(scanner);
+        if (option >= 1 && option <= 12){
+            generateFinancialReport(option);
+        } else{
+            handleMainMenu(scanner);
+        }
+        handleFinanceManagementMenu(scanner);
+    }
+
+    private static void generateFinancialReport(int monthNumber){
+        String report = WHMS.getFinancialReportString(monthNumber);
+        System.out.println(report);
     }
     
 }
