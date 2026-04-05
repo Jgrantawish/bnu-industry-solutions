@@ -1,3 +1,8 @@
+ /**
+ * The Contact Class holds the common details and attributes shared by all people stored on the system, including Customers and Suppliers.
+ * The name of a Contact does not have to be unique.
+ * The email address is the unique identifier for a Contact.
+ */
 public abstract class Contact {
     private String name;
     private String email;
@@ -52,7 +57,5 @@ public abstract class Contact {
     public void setPostcode(String postcode){
         this.postcode = postcode;
     }
-
-    
 
 }
