@@ -1,4 +1,6 @@
 public class InventoryStock {
+    private final double DEFAULT_MARK_UP_MULTIPLIER = 1.5;
+    private final int DEFAULT_LOW_STOCK_THRESHOLD = 5;
     private String name;
     private String description;
     private Supplier supplier;
@@ -13,8 +15,8 @@ public class InventoryStock {
         this.description = quantityItem.getDescription();
         this.supplier = quantityItem.getSupplier();
         this.stockLevel = quantityItem.getQuantity();
-        this.markUpMultiplier = 1.5;
-        this.lowStockThreshold = 5;
+        this.markUpMultiplier = DEFAULT_MARK_UP_MULTIPLIER;
+        this.lowStockThreshold = DEFAULT_LOW_STOCK_THRESHOLD;
         this.calculateAvgPurchasePrice(quantityItem);
         this.calculateCurrentSellPrice();
     }
