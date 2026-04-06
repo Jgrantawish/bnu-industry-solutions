@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+ /**
+ * The SupplierOrder class holds the details of a specific purchase transaction.
+ * This includes the supplier, details about the goods ordered and the order status.
+ */
 public class SupplierOrder extends Order{
     private Supplier supplier;
     private ArrayList<QuantityItem> basket = new ArrayList<>();
@@ -12,6 +16,7 @@ public class SupplierOrder extends Order{
         this.totalCost = calculateTotalCost();
     }
 
+    /** Returns the total amount that BNU Industry Solutions will pay the Supplier for the goods in this order.*/
     private double calculateTotalCost(){
         double cost = 0;
         for (QuantityItem quantityItem : this.basket){
@@ -20,6 +25,7 @@ public class SupplierOrder extends Order{
         return cost;
     }
 
+    /** Returns a comma separated list summarising the goods purchased from the Supplier in this order.*/
     private String orderItemsToString(){
         String orderItemsString = "";
         for (int i = 0; i < this.basket.size(); i++){
@@ -44,6 +50,7 @@ public class SupplierOrder extends Order{
         return this.totalCost;
     }
 
+    /** Overrides toString method to give a summary of the SupplierOrder's attributes */
     public String toString(){
         String orderSummaryString = this.orderItemsToString();
         return "Order ID: " + this.getId() + " -- From supplier " + this.supplier.getName() + " on " + this.getDate() + " -- Summary: " + orderSummaryString + " -- Total: £" + this.totalCost + " -- Status: " + this.getStatus();

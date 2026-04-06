@@ -1,5 +1,9 @@
 import java.time.LocalDate;
-
+ 
+ /**
+ * The Order Class holds the common details and attributes shared by Customer Orders and Supplier Orders.
+ * The orderId unique identifier for an Order.
+ */
 public abstract class Order {
     private static int count = 0;
     private int orderId; 

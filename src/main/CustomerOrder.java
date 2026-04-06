@@ -1,5 +1,9 @@
 import java.util.ArrayList;
 
+ /**
+ * The CustomerOrder class holds the details of a specific sale transaction.
+ * This includes the customer, details about the goods ordered and the order status.
+ */
 public class CustomerOrder extends Order {
     private Customer customer;
     private ArrayList<SellItem> basket = new ArrayList<>();
@@ -12,6 +16,7 @@ public class CustomerOrder extends Order {
         this.totalCost = calculateTotalCost();
     }
 
+    /** Returns the total amount that the Customer will pay for goods ordered.*/
     private double calculateTotalCost(){
         double cost = 0;
         for (SellItem sellItem : this.basket){
@@ -20,6 +25,7 @@ public class CustomerOrder extends Order {
         return cost;
     }
 
+    /** Returns a comma separated list summarising the goods purchased by the Customer in this order.*/
     private String orderItemsToString(){
         String orderItemsString = "";
         for (int i = 0; i < this.basket.size(); i++){
@@ -40,6 +46,7 @@ public class CustomerOrder extends Order {
         return this.totalCost;
     }
 
+    /** Overrides toString method to give a summary of the CustomerOrder's attributes */
     public String toString(){
         String orderSummaryString = this.orderItemsToString();
         return "Order ID: " + this.getId() + " -- Ordered by " + this.customer.getName() + " on " + this.getDate() + " -- Summary: " + orderSummaryString + " -- Total: £" + this.totalCost + " -- Status: " + this.getStatus();
