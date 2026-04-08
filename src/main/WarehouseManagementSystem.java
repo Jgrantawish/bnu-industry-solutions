@@ -1,5 +1,10 @@
 import java.util.ArrayList;
 
+ /**
+ * The WarehouseManagementSystem Class acts as an inferface for the UI. 
+ * It combines the business logic of ContactManagers, InventoryManagers, OrderManagers and FinanceManagers and provides logic for the interactions between some of these classes.
+ * Hides the complexities of the business logic classes from the main program.
+ */
 public class WarehouseManagementSystem {
     private ContactManager<Supplier> supplierManager = new ContactManager<Supplier>();
     private ContactManager<Customer> customerManager = new ContactManager<Customer>();
@@ -24,6 +29,7 @@ public class WarehouseManagementSystem {
         return allSupplierItems;
     }
 
+    /** Adds default data to the system. Called at the start of the program. */
     public void createDummyData(){
 
         // Add Customers
@@ -82,9 +88,7 @@ public class WarehouseManagementSystem {
         this.markSupplierOrderAsDelivered(order3);
     }
 
-
-
-
+    /** Creates a new Supplier object and adds it to the supplier manager */
     public void addSupplier(String name, String email, String phone, String address, String postcode){
         Supplier supplier = new Supplier(name, email, phone, address, postcode);
         this.supplierManager.addContact(supplier);
@@ -102,6 +106,7 @@ public class WarehouseManagementSystem {
         this.supplierManager.deleteContact(supplier);
     }
 
+    /** Returns all previous supplier orders placed to a given supplier */
     public ArrayList<SupplierOrder> getOrderHistoryOfSupplier(Supplier supplier){
         ArrayList<SupplierOrder> orderHistory = new ArrayList<>();
         for (SupplierOrder order : supplierOrderManager.getAllOrders()){
@@ -113,7 +118,7 @@ public class WarehouseManagementSystem {
         return orderHistory;
     }
 
-
+    /** Creates a new Customer object and adds it to the customer manager */
     public void addCustomer(String name, String email, String phone, String address, String postcode){
         Customer customer = new Customer(name, email, phone, address, postcode);
         this.customerManager.addContact(customer);
@@ -131,6 +136,7 @@ public class WarehouseManagementSystem {
         this.customerManager.deleteContact(customer);
     }
 
+    /** Returns all previous customer orders placed by a given customer */
     public ArrayList<CustomerOrder> getOrderHistoryOfCustomer(Customer customer){
         ArrayList<CustomerOrder> orderHistory = new ArrayList<>();
         for (CustomerOrder order : customerOrderManager.getAllOrders()){
@@ -142,6 +148,9 @@ public class WarehouseManagementSystem {
         return orderHistory;
     }
 
+    /** Finds an Item object that is sold by one of our suppliers. 
+     * Returns null if no supplier item with the specified name exists.
+    */
     public Item findSupplierItemByName(String itemName){
         ArrayList<Item> allSupplierItems = getAllSupplierItems();
         for (Item item: allSupplierItems){
@@ -152,6 +161,7 @@ public class WarehouseManagementSystem {
         return null;
     } 
 
+    /** Creates a new Item object and adds it to Supplier who BNU can buy this product from */
     public void addSupplierItem(String itemName, String description, double price, Supplier supplier){
         Item newItem = new Item(itemName, description, price, supplier);
         supplier.addItem(newItem);
@@ -182,11 +192,14 @@ public class WarehouseManagementSystem {
         return this.supplierOrderManager.getOutstandingOrders();
     }
 
+    /** Creates a new SupplierOrder and adds it to the supplierOrderManager */
     public void placeSupplierOrder(Supplier supplier, ArrayList<QuantityItem> basket){
         SupplierOrder order = new SupplierOrder(supplier, basket);
         this.supplierOrderManager.addOrder(order);
     }
 
+    /** Marks a supplierOrder as delivered and updates the inventory stock levels for each item accordingly. 
+     * If a new item has been ordered for the first time, create a new InventoryStock item for it */
     public void markSupplierOrderAsDelivered(SupplierOrder order){
         order.markAsDelivered();
         ArrayList<QuantityItem> orderedItems = order.getBasket();
@@ -201,7 +214,6 @@ public class WarehouseManagementSystem {
         }
     }
 
-
     public CustomerOrder findOutstandingCustomerOrderById(int id){
         return this.customerOrderManager.findOutstandingOrderById(id);
     }
@@ -210,6 +222,7 @@ public class WarehouseManagementSystem {
         return this.customerOrderManager.getOutstandingOrders();
     }
 
+    /** Creates a new customer order and updates the stock levels of each product in the order. */
     public void placeCustomerOrder(Customer customer, ArrayList<SellItem> basket){
         customerOrderManager.addOrder(new CustomerOrder(customer , basket));
         for (SellItem item: basket){
