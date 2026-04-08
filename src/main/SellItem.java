@@ -1,3 +1,6 @@
+ /**
+ * The SellItem Class holds details about a type of product purchased in a CustomerOrder. 
+ */
 public class SellItem extends QuantityItem{
     private double unitSellPrice;
     

@@ -1,3 +1,10 @@
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Copy;
+
+/**
+ * The Item Class is the base class defining the common attributes of goods in the system.
+ * Instances of this class hold the details of items sold by Suppliers.
+ * The name is the unique identifier for an Item.
+ */
 public class Item{
     private String name;
     private String description;
@@ -11,7 +18,7 @@ public class Item{
         this.supplier = supplier;
     }
 
-    // Copy constructor used by QuantityItems
+    /** Copy constructor used by QuantityItems */
     protected Item(Item itemToCopy){
         this.name = itemToCopy.name;
         this.description = itemToCopy.description;
@@ -34,6 +41,5 @@ public class Item{
     public double getUnitPurchasePrice(){
         return this.unitPurchasePrice;
     }
-
 
 }
