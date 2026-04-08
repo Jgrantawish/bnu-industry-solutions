@@ -1,5 +1,3 @@
-import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Copy;
-
 /**
  * The Item Class is the base class defining the common attributes of goods in the system.
  * Instances of this class hold the details of items sold by Suppliers.

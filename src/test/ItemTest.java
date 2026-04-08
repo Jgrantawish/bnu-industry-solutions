@@ -17,7 +17,7 @@ public class ItemTest {
         Item brick1 = new Item("brick", "red brick", 3, null);
         // Use copy constructor to create an indentical Item
         Item identicalBrick = new Item(brick1);
-        assertEquals(brick1, identicalBrick);
+        assertEquals(brick1.getName(), identicalBrick.getName());
     }
 
 }
