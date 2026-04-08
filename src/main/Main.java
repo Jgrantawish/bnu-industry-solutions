@@ -465,6 +465,7 @@ public class Main {
 
     private static void viewOrderHistoryOfSupplier(Scanner scanner){
         Supplier supplier = getExistingSupplierByEmail(scanner, "Please enter the email address of the Supplier that you want to view the Order History of.");
+        System.out.println("\n----- " + supplier.getName() + "'s Order History -----\n");
         ArrayList<SupplierOrder> orderHistory = WHMS.getOrderHistoryOfSupplier(supplier);
         int index = 0;
         for (SupplierOrder order : orderHistory){
@@ -634,6 +635,7 @@ public class Main {
 
     private static void viewOrderHistoryOfCustomer(Scanner scanner){
         Customer customer = getExistingCustomerByEmail(scanner, "Please enter the email address of the Customer that you want to view the Order History of.");
+        System.out.println("\n----- " + customer.getName() + "'s Order History -----\n");
         ArrayList<CustomerOrder> orderHistory = WHMS.getOrderHistoryOfCustomer(customer);
         int index = 0;
         for (CustomerOrder order : orderHistory){
