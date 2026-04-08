@@ -551,7 +551,7 @@ public class Main {
 
     private static int getUpdateCustomerDetailsMenuOption(Scanner scanner, Customer customer){
         String menuText= "Please select the corresponding number (1-5) from the menu below:\n 1. Update Customer Name \n 2. Update Customer Email \n 3. Update Customer Phone Number \n 4. Update Customer Address  \n 5. Back to Customer Management";
-        System.out.println("\n----- " + customer.getName() + " Supplier Details ----- \n\nWhat would you like to do?\n" + menuText);
+        System.out.println("\n----- " + customer.getName() + " Customer Details ----- \n\nWhat would you like to do?\n" + menuText);
         return getNumberOption(scanner, 5, menuText);
     }
 
