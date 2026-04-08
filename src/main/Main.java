@@ -1,12 +1,17 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
-// Starting point for the program
+ /**
+ * Main creates the starting point for the program. 
+ * It provides a UI for the application.
+ * It is responsible for displaying information to the user and gathering all user inputs.
+ * It interacts with the program's business logic through the WarehouseManagementSystem. 
+ */
 public class Main {
-
     // Create a new WHMS 
     private static WarehouseManagementSystem WHMS = new WarehouseManagementSystem();
 
+    /** Starting point for the program */
     public static void main(String[] args) {
 
         // Adds some default data at the start of the program
@@ -24,6 +29,7 @@ public class Main {
         scanner.close();
     }
    
+    /** Helper function to keep prompting the user until they enter a String value. */
     private static String getStringInput(Scanner scanner, String prompt){
         System.out.println(prompt);
         String input = scanner.nextLine();
@@ -34,6 +40,7 @@ public class Main {
         return input;
     }
 
+    /** Helper function to keep prompting the user until they enter an email address. */
     private static String getEmailInput(Scanner scanner, String prompt){
         System.out.println(prompt);
         String input = scanner.nextLine();
@@ -44,6 +51,7 @@ public class Main {
         return input;
     }
 
+    /** Helper function to keep prompting the user until they enter a phone number. */
     private static String getPhoneNumberInput(Scanner scanner, String prompt){
         System.out.println(prompt);
         String input = scanner.nextLine();
@@ -55,6 +63,7 @@ public class Main {
         return input;
     }
 
+    /** Helper function to keep prompting the user until they enter a positive double value. */
     private static double getDoubleInput(Scanner scanner, String prompt, String doubleType){
         System.out.println(prompt);
         double input = -1;
@@ -73,6 +82,7 @@ public class Main {
         return input;
     }
 
+    /** Helper function to keep prompting the user until they enter a positive integer value. */
     private static int getIntInput(Scanner scanner, String prompt){
         System.out.println(prompt);
         int input = -1;
@@ -94,6 +104,7 @@ public class Main {
 
     }
 
+    /** Helper function to keep prompting the user until they enter either "yes" or "no". */
     private static boolean getYesNoInput(Scanner scanner, String prompt){
         System.out.println(prompt);
         String input = scanner.nextLine(); 
@@ -110,6 +121,7 @@ public class Main {
         }
     }
 
+    /** Helper function to keep prompting the user to enter the quantity of a product that they want until it is a number we have in stock. */
     private static int getInStockQuantity(Scanner scanner, String prompt, InventoryStock stockItem){
         int quantity = getIntInput(scanner, prompt);
             while (!stockItem.enoughInStock(quantity)){
@@ -119,7 +131,7 @@ public class Main {
         return quantity;
     }
 
-
+    /** Helper function to keep prompting the user to enter an email address until they enter a vaild email that is not already being used by another Supplier. */
     private static String getNewSupplierEmailInput(Scanner scanner, String prompt){
         String input = getEmailInput(scanner, prompt);
         while (WHMS.findSupplierByEmail(input) != null) {
@@ -129,6 +141,7 @@ public class Main {
         return input;
     }
 
+    /** Helper function to keep prompting the user until they enter the email address of a Supplier in the system. */
      private static Supplier getExistingSupplierByEmail(Scanner scanner, String prompt){
         String input = getEmailInput(scanner, prompt);
         while (WHMS.findSupplierByEmail(input) == null) {
@@ -138,6 +151,7 @@ public class Main {
         return WHMS.findSupplierByEmail(input);
     }
 
+     /** Helper function to keep prompting the user to enter an email address until they enter a vaild email that is not already being used by another Customer. */
     private static String getNewCustomerEmailInput(Scanner scanner, String prompt){
         String input = getEmailInput(scanner, prompt);
         while (WHMS.findCustomerByEmail(input) != null) {
@@ -147,6 +161,7 @@ public class Main {
         return input;
     }
 
+    /** Helper function to keep prompting the user until they enter the email address of a Customer in the system. */
      private static Customer getExistingCustomerByEmail(Scanner scanner, String prompt){
         String input = getEmailInput(scanner, prompt);
         while (WHMS.findCustomerByEmail(input) == null) {
@@ -156,6 +171,7 @@ public class Main {
         return WHMS.findCustomerByEmail(input);
     }
 
+    /** Helper function to keep prompting the user until they enter an item name that isn't already being sold by one of our Suppliers. */
     private static String getNewItemNameInput(Scanner scanner, String prompt){
         String input = getStringInput(scanner, prompt);
         while (WHMS.findSupplierItemByName(input) != null) {
@@ -165,6 +181,7 @@ public class Main {
         return input;
     }
 
+    /** Helper function to keep prompting the user until they enter a the name of an item supplied by a specified Supplier. */
     private static Item findItemfromSupplier(Scanner scanner, String prompt, Supplier supplier){
         String input = getStringInput(scanner, prompt);
         while (supplier.findItemByName(input) == null) {
@@ -174,15 +191,17 @@ public class Main {
         return supplier.findItemByName(input); 
     }
 
+    /** Helper function to keep prompting the user until they enter a the name of an item in our warehouse. */
     private static InventoryStock findInventoryStockItem(Scanner scanner, String prompt){
         String input = getStringInput(scanner, prompt);
         while (WHMS.findInventoryStockItemByName(input) == null) {
-            System.out.println("Uh Oh! There is no Item with this name. ");
+            System.out.println("Uh Oh! There is no item with this name. ");
             input = getStringInput(scanner, prompt);
         }
         return WHMS.findInventoryStockItemByName(input); 
     }
 
+    /** Helper function to keep prompting the user until they enter the orderId of a SupplierOrder that is yet to be delivered. */
     private static SupplierOrder findOustandingSupplierOrderById(Scanner scanner, String prompt){
         int input = getIntInput(scanner, prompt);
         while (WHMS.findOutstandingSupplierOrderById(input) == null) {
@@ -192,6 +211,7 @@ public class Main {
         return WHMS.findOutstandingSupplierOrderById(input); 
     }
 
+    /** Helper function to keep prompting the user until they enter the orderId of a CustomerOrder that is yet to be delivered. */
     private static CustomerOrder findOutstandingCustomerOrderById(Scanner scanner, String prompt){
         int input = getIntInput(scanner, prompt);
         while (WHMS.findOutstandingCustomerOrderById(input) == null) {
@@ -201,7 +221,7 @@ public class Main {
         return WHMS.findOutstandingCustomerOrderById(input); 
     }
     
-
+    /** Helper function to keep prompting the user until they enter a vaild option from the menu. */
     private static int getNumberOption(Scanner scanner, int maxMenuLength, String menuText){
         int option = 0;
         while (option < 1 || option > maxMenuLength){
